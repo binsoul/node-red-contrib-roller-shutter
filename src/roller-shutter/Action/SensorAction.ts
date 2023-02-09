@@ -71,35 +71,34 @@ export class SensorAction implements Action {
     }
 
     execute(input: Input): Output {
-        switch (input.getMessage().data.topic?.toLowerCase()) {
-            case this.configuration.inputOutsideIlluminanceTopic:
-                this.storage.setOutsideIlluminance(input.getRequiredValue<number>('payloadOutsideIlluminance'));
+        const topic = input.getMessage().data.topic?.toLowerCase();
 
-                break;
-            case this.configuration.inputOutsideTemperatureTopic:
-                this.storage.setOutsideTemperature(input.getRequiredValue<number>('payloadOutsideTemperature'));
+        if (topic === this.configuration.inputOutsideIlluminanceTopic) {
+            this.storage.setOutsideIlluminance(input.getRequiredValue<number>('payloadOutsideIlluminance'));
+        }
 
-                break;
-            case this.configuration.inputInsideTemperatureTopic:
-                this.storage.setInsideTemperature(input.getRequiredValue<number>('payloadInsideTemperature'));
+        if (topic === this.configuration.inputOutsideTemperatureTopic) {
+            this.storage.setOutsideTemperature(input.getRequiredValue<number>('payloadOutsideTemperature'));
+        }
 
-                break;
-            case this.configuration.inputWindowTopic:
-                this.storage.setWindow(input.getRequiredValue<string>('payloadWindow'));
+        if (topic === this.configuration.inputInsideTemperatureTopic) {
+            this.storage.setInsideTemperature(input.getRequiredValue<number>('payloadInsideTemperature'));
+        }
 
-                break;
-            case this.configuration.inputSunAzimuthTopic:
-                this.storage.setSunAzimuth(input.getRequiredValue<number>('payloadSunAzimuth'));
+        if (topic === this.configuration.inputWindowTopic) {
+            this.storage.setWindow(input.getRequiredValue<string>('payloadWindow'));
+        }
 
-                break;
-            case this.configuration.inputSunAltitudeTopic:
-                this.storage.setSunAltitude(input.getRequiredValue<number>('payloadSunAltitude'));
+        if (topic === this.configuration.inputSunAzimuthTopic) {
+            this.storage.setSunAzimuth(input.getRequiredValue<number>('payloadSunAzimuth'));
+        }
 
-                break;
-            case this.configuration.inputPositionTopic:
-                this.storage.setManualPosition(input.getRequiredValue<number>('payloadPosition'));
+        if (topic === this.configuration.inputSunAltitudeTopic) {
+            this.storage.setSunAltitude(input.getRequiredValue<number>('payloadSunAltitude'));
+        }
 
-                break;
+        if (topic === this.configuration.inputPositionTopic) {
+            this.storage.setManualPosition(input.getRequiredValue<number>('payloadPosition'));
         }
 
         return new Output();
