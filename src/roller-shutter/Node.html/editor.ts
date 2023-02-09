@@ -219,6 +219,11 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             required: true,
             validate: RED.validators.number(true),
         },
+        positionDayClosed: {
+            value: 0,
+            required: true,
+            validate: RED.validators.number(true),
+        },
         positionNightOpen: {
             value: 100,
             required: true,
@@ -231,11 +236,6 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
         },
         positionNightTilted: {
             value: 50,
-            required: true,
-            validate: RED.validators.number(true),
-        },
-        positionDayClosed: {
-            value: 0,
             required: true,
             validate: RED.validators.number(true),
         },
