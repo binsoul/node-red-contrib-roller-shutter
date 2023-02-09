@@ -64,7 +64,7 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
     const controllerValueStep = getNumber(config.controllerValueStep, 1);
     const positionDayOpen = getNumber(config.positionDayOpen, 100);
     const positionNightOpen = getNumber(config.positionNightOpen, 100);
-    const positionNightClosed = getNumber(config.positionNightClosed, 100);
+    const positionNightClosed = getNumber(config.positionNightClosed, 0);
     const positionNightTilted = getNumber(config.positionNightTilted, 50);
     const positionDayClosed = getNumber(config.positionDayClosed, 0);
     const positionShadingOpen = getNumber(config.positionShadingOpen, 100);
