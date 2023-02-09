@@ -1,0 +1,1302 @@
+[
+    {
+        "id": "75b1632e8be4d5e1",
+        "type": "tab",
+        "label": "Roller shutter",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "87b190fead87b634",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "outsideIlluminance",
+        "payload": "10000",
+        "payloadType": "num",
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "cde32820bdce8f7f"
+            ]
+        ]
+    },
+    {
+        "id": "09e395c6ad237cfc",
+        "type": "debug",
+        "z": "75b1632e8be4d5e1",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "175a7dbe5a2c7c79",
+        "type": "binsoul-roller-shutter",
+        "z": "75b1632e8be4d5e1",
+        "inputOutsideIlluminanceSource": "msg",
+        "inputOutsideIlluminanceProperty": "payload",
+        "inputOutsideIlluminanceTopic": "outsideIlluminance",
+        "inputOutsideTemperatureSource": "msg",
+        "inputOutsideTemperatureProperty": "payload",
+        "inputOutsideTemperatureTopic": "outsideTemperature",
+        "inputInsideTemperatureSource": "msg",
+        "inputInsideTemperatureProperty": "payload",
+        "inputInsideTemperatureTopic": "insideTemperature",
+        "inputWindowSource": "msg",
+        "inputWindowProperty": "payload",
+        "inputWindowTopic": "window",
+        "inputSunAzimuthProperty": "payload",
+        "inputSunAzimuthTopic": "sunAzimuth",
+        "inputSunAltitudeProperty": "payload",
+        "inputSunAltitudeTopic": "sunAltitude",
+        "inputPositionProperty": "payload",
+        "inputPositionTopic": "position",
+        "outputValueProperty": "payload",
+        "outputValueTarget": "msg",
+        "controllerValueStep": "1",
+        "controllerValueOpen": "100",
+        "controllerValueClosed": 0,
+        "dayTemperatureMin": "12",
+        "dayTemperatureDesired": "21",
+        "dayTemperatureMax": "23",
+        "nightTemperatureMin": "12",
+        "nightTemperatureDesired": "18",
+        "nightTemperatureMax": "21",
+        "dayStartIlluminance": 25,
+        "dayStartTimeFromWorkday": "06:00",
+        "dayStartTimeFromWeekend": "08:00",
+        "dayStartTimeToWorkday": "09:00",
+        "dayStartTimeToWeekend": "10:00",
+        "dayEndIlluminance": "55",
+        "dayEndTimeFromWorkday": "17:00",
+        "dayEndTimeFromWeekend": "19:00",
+        "dayEndTimeToWorkday": "22:00",
+        "dayEndTimeToWeekend": "23:00",
+        "shadingStartIlluminance": "35000",
+        "shadingStartAzimuth": "144",
+        "shadingStartAltitude": "15",
+        "shadingEndIlluminance": "20000",
+        "shadingEndAzimuth": "282",
+        "shadingEndAltitude": "5",
+        "positionDayOpen": "100",
+        "positionNightOpen": "100",
+        "positionNightClosed": "0",
+        "positionNightTilted": "50",
+        "positionDayClosed": "0",
+        "positionShadingOpen": "100",
+        "positionShadingClosed": "25",
+        "allowNightChange": true,
+        "name": "",
+        "x": 210,
+        "y": 60,
+        "wires": [
+            [
+                "09e395c6ad237cfc"
+            ]
+        ]
+    },
+    {
+        "id": "fc8577a03e2f35d2",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "outsideIlluminance",
+        "payload": "10",
+        "payloadType": "num",
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "cde32820bdce8f7f"
+            ]
+        ]
+    },
+    {
+        "id": "e6798a6ef9fb5d8b",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "outsideIlluminance",
+        "payload": "100000",
+        "payloadType": "num",
+        "x": 590,
+        "y": 160,
+        "wires": [
+            [
+                "cde32820bdce8f7f"
+            ]
+        ]
+    },
+    {
+        "id": "2c623ba6f35b0d3f",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "window",
+        "payload": "open",
+        "payloadType": "str",
+        "x": 890,
+        "y": 340,
+        "wires": [
+            [
+                "a4642cca0002feb2"
+            ]
+        ]
+    },
+    {
+        "id": "1d8a7dfc488de5b6",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "window",
+        "payload": "tilted",
+        "payloadType": "str",
+        "x": 890,
+        "y": 380,
+        "wires": [
+            [
+                "a4642cca0002feb2"
+            ]
+        ]
+    },
+    {
+        "id": "475d22090955e345",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "window",
+        "payload": "closed",
+        "payloadType": "str",
+        "x": 900,
+        "y": 420,
+        "wires": [
+            [
+                "a4642cca0002feb2"
+            ]
+        ]
+    },
+    {
+        "id": "0c426054a978ca76",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set time to 05:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "setFixedTime",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$toMillis('2020-02-20T05:00:00')",
+        "payloadType": "jsonata",
+        "x": 220,
+        "y": 160,
+        "wires": [
+            [
+                "a5332f0ba12eb474"
+            ]
+        ]
+    },
+    {
+        "id": "533d9467f310e52a",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set time to 07:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "setFixedTime",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$toMillis('2020-02-20T07:00:00')",
+        "payloadType": "jsonata",
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "a5332f0ba12eb474"
+            ]
+        ]
+    },
+    {
+        "id": "69217733eef4080d",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set time to 09:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "setFixedTime",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$toMillis('2020-02-20T09:00:00')",
+        "payloadType": "jsonata",
+        "x": 220,
+        "y": 240,
+        "wires": [
+            [
+                "a5332f0ba12eb474"
+            ]
+        ]
+    },
+    {
+        "id": "3c6b59ab03444ea2",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set time to 11:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "setFixedTime",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$toMillis('2020-02-20T11:00:00')",
+        "payloadType": "jsonata",
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "a5332f0ba12eb474"
+            ]
+        ]
+    },
+    {
+        "id": "a3b172cf175fc5b4",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set time to 13:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "setFixedTime",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$toMillis('2020-02-20T13:00:00')",
+        "payloadType": "jsonata",
+        "x": 220,
+        "y": 320,
+        "wires": [
+            [
+                "a5332f0ba12eb474"
+            ]
+        ]
+    },
+    {
+        "id": "363da036d1a31573",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set time to 15:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "setFixedTime",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$toMillis('2020-02-20T15:00:00')",
+        "payloadType": "jsonata",
+        "x": 220,
+        "y": 360,
+        "wires": [
+            [
+                "a5332f0ba12eb474"
+            ]
+        ]
+    },
+    {
+        "id": "16e79075b793b95d",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set time to 17:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "setFixedTime",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$toMillis('2020-02-20T17:00:00')",
+        "payloadType": "jsonata",
+        "x": 220,
+        "y": 400,
+        "wires": [
+            [
+                "a5332f0ba12eb474"
+            ]
+        ]
+    },
+    {
+        "id": "52f09a283ce7fa16",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set time to 19:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "setFixedTime",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$toMillis('2020-02-20T19:00:00')",
+        "payloadType": "jsonata",
+        "x": 220,
+        "y": 440,
+        "wires": [
+            [
+                "a5332f0ba12eb474"
+            ]
+        ]
+    },
+    {
+        "id": "3022a9be05179e99",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set time to 21:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "setFixedTime",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$toMillis('2020-02-20T21:00:00')",
+        "payloadType": "jsonata",
+        "x": 220,
+        "y": 480,
+        "wires": [
+            [
+                "a5332f0ba12eb474"
+            ]
+        ]
+    },
+    {
+        "id": "4edba31663927f0d",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set time to 23:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "setFixedTime",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$toMillis('2020-02-20T23:00:00')",
+        "payloadType": "jsonata",
+        "x": 220,
+        "y": 520,
+        "wires": [
+            [
+                "a5332f0ba12eb474"
+            ]
+        ]
+    },
+    {
+        "id": "a5332f0ba12eb474",
+        "type": "link out",
+        "z": "75b1632e8be4d5e1",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "bf999adc7009d3b9"
+        ],
+        "x": 375,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "bf999adc7009d3b9",
+        "type": "link in",
+        "z": "75b1632e8be4d5e1",
+        "name": "link in 1",
+        "links": [
+            "a5332f0ba12eb474",
+            "506ab10b0c9f0e5b",
+            "c0cdce19a0750014",
+            "a4642cca0002feb2",
+            "cde32820bdce8f7f",
+            "87788ca74ecb1e3f",
+            "b5cb921066b914d4",
+            "486ba8bc04695630"
+        ],
+        "x": 95,
+        "y": 60,
+        "wires": [
+            [
+                "175a7dbe5a2c7c79"
+            ]
+        ]
+    },
+    {
+        "id": "cb01522604b18e45",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "insideTemperature",
+        "payload": "17",
+        "payloadType": "num",
+        "x": 920,
+        "y": 240,
+        "wires": [
+            [
+                "b5cb921066b914d4"
+            ]
+        ]
+    },
+    {
+        "id": "90bcbc067d824275",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "insideTemperature",
+        "payload": "21",
+        "payloadType": "num",
+        "x": 920,
+        "y": 200,
+        "wires": [
+            [
+                "b5cb921066b914d4"
+            ]
+        ]
+    },
+    {
+        "id": "7d17e52de80d275b",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "insideTemperature",
+        "payload": "25",
+        "payloadType": "num",
+        "x": 920,
+        "y": 160,
+        "wires": [
+            [
+                "b5cb921066b914d4"
+            ]
+        ]
+    },
+    {
+        "id": "d2cb6b8762c344b5",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "insideTemperature",
+        "payload": "13",
+        "payloadType": "num",
+        "x": 920,
+        "y": 280,
+        "wires": [
+            [
+                "b5cb921066b914d4"
+            ]
+        ]
+    },
+    {
+        "id": "55085f4a8f32c781",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "outsideTemperature",
+        "payload": "17",
+        "payloadType": "num",
+        "x": 580,
+        "y": 420,
+        "wires": [
+            [
+                "c0cdce19a0750014"
+            ]
+        ]
+    },
+    {
+        "id": "ed8847286add2f03",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "outsideTemperature",
+        "payload": "21",
+        "payloadType": "num",
+        "x": 580,
+        "y": 380,
+        "wires": [
+            [
+                "c0cdce19a0750014"
+            ]
+        ]
+    },
+    {
+        "id": "1d4a3a01c78fac38",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "outsideTemperature",
+        "payload": "25",
+        "payloadType": "num",
+        "x": 580,
+        "y": 340,
+        "wires": [
+            [
+                "c0cdce19a0750014"
+            ]
+        ]
+    },
+    {
+        "id": "c032657851494a6a",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "outsideTemperature",
+        "payload": "13",
+        "payloadType": "num",
+        "x": 580,
+        "y": 460,
+        "wires": [
+            [
+                "c0cdce19a0750014"
+            ]
+        ]
+    },
+    {
+        "id": "4a564d2409b65427",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "outsideIlluminance",
+        "payload": "1000",
+        "payloadType": "num",
+        "x": 590,
+        "y": 240,
+        "wires": [
+            [
+                "cde32820bdce8f7f"
+            ]
+        ]
+    },
+    {
+        "id": "790ed1fc982c0c02",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sunAzimuth",
+        "payload": "180",
+        "payloadType": "num",
+        "x": 560,
+        "y": 600,
+        "wires": [
+            [
+                "506ab10b0c9f0e5b"
+            ]
+        ]
+    },
+    {
+        "id": "3691f3ffa9546a90",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sunAzimuth",
+        "payload": "90",
+        "payloadType": "num",
+        "x": 560,
+        "y": 560,
+        "wires": [
+            [
+                "506ab10b0c9f0e5b"
+            ]
+        ]
+    },
+    {
+        "id": "34e1baf4cc9db9c0",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sunAzimuth",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 550,
+        "y": 520,
+        "wires": [
+            [
+                "506ab10b0c9f0e5b"
+            ]
+        ]
+    },
+    {
+        "id": "60304e5617a359f3",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sunAzimuth",
+        "payload": "270",
+        "payloadType": "num",
+        "x": 560,
+        "y": 640,
+        "wires": [
+            [
+                "506ab10b0c9f0e5b"
+            ]
+        ]
+    },
+    {
+        "id": "506ab10b0c9f0e5b",
+        "type": "link out",
+        "z": "75b1632e8be4d5e1",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "bf999adc7009d3b9"
+        ],
+        "x": 695,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "c0cdce19a0750014",
+        "type": "link out",
+        "z": "75b1632e8be4d5e1",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "bf999adc7009d3b9"
+        ],
+        "x": 735,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "b5cb921066b914d4",
+        "type": "link out",
+        "z": "75b1632e8be4d5e1",
+        "name": "link out 4",
+        "mode": "link",
+        "links": [
+            "bf999adc7009d3b9"
+        ],
+        "x": 1075,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "a4642cca0002feb2",
+        "type": "link out",
+        "z": "75b1632e8be4d5e1",
+        "name": "link out 5",
+        "mode": "link",
+        "links": [
+            "bf999adc7009d3b9"
+        ],
+        "x": 1035,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "cde32820bdce8f7f",
+        "type": "link out",
+        "z": "75b1632e8be4d5e1",
+        "name": "link out 6",
+        "mode": "link",
+        "links": [
+            "bf999adc7009d3b9"
+        ],
+        "x": 755,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "de195f117d71dcdc",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sunAltitude",
+        "payload": "20",
+        "payloadType": "num",
+        "x": 890,
+        "y": 600,
+        "wires": [
+            [
+                "87788ca74ecb1e3f"
+            ]
+        ]
+    },
+    {
+        "id": "fd626d1457cdee07",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sunAltitude",
+        "payload": "10",
+        "payloadType": "num",
+        "x": 890,
+        "y": 560,
+        "wires": [
+            [
+                "87788ca74ecb1e3f"
+            ]
+        ]
+    },
+    {
+        "id": "a1dbbd7bd73e7559",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sunAltitude",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 890,
+        "y": 520,
+        "wires": [
+            [
+                "87788ca74ecb1e3f"
+            ]
+        ]
+    },
+    {
+        "id": "b6c348b633a6db87",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sunAltitude",
+        "payload": "30",
+        "payloadType": "num",
+        "x": 890,
+        "y": 640,
+        "wires": [
+            [
+                "87788ca74ecb1e3f"
+            ]
+        ]
+    },
+    {
+        "id": "87788ca74ecb1e3f",
+        "type": "link out",
+        "z": "75b1632e8be4d5e1",
+        "name": "link out 7",
+        "mode": "link",
+        "links": [
+            "bf999adc7009d3b9"
+        ],
+        "x": 1025,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "c6de2d28bb5b0a64",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sunAzimuth",
+        "payload": "360",
+        "payloadType": "num",
+        "x": 560,
+        "y": 680,
+        "wires": [
+            [
+                "506ab10b0c9f0e5b"
+            ]
+        ]
+    },
+    {
+        "id": "abbe1d1b3371e73e",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "position",
+        "payload": "100",
+        "payloadType": "str",
+        "x": 1230,
+        "y": 240,
+        "wires": [
+            [
+                "486ba8bc04695630"
+            ]
+        ]
+    },
+    {
+        "id": "486ba8bc04695630",
+        "type": "link out",
+        "z": "75b1632e8be4d5e1",
+        "name": "link out 8",
+        "mode": "link",
+        "links": [
+            "bf999adc7009d3b9"
+        ],
+        "x": 1375,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "7d599eeb234b1ed4",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "position",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 1220,
+        "y": 160,
+        "wires": [
+            [
+                "486ba8bc04695630"
+            ]
+        ]
+    },
+    {
+        "id": "b4666a657130a9ed",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "position",
+        "payload": "50",
+        "payloadType": "str",
+        "x": 1220,
+        "y": 200,
+        "wires": [
+            [
+                "486ba8bc04695630"
+            ]
+        ]
+    }
+]

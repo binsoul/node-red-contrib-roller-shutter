@@ -1,0 +1,474 @@
+<script data-template-name="binsoul-roller-shutter" type="text/html">
+    <div class="binsoul-roller-shutter-wrapper">
+        <h3><span data-i18n="binsoul-roller-shutter.group.input"></span></h3>
+        <div>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputOutsideIlluminanceTopic">
+                    <label for="node-input-inputOutsideIlluminanceTopic" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputOutsideIlluminanceTopic"></span>
+                    </label>
+                    <input type="text" id="node-input-inputOutsideIlluminanceTopic" class="binsoul-roller-shutter-input" />
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputOutsideIlluminanceValue">
+                    <label for="node-input-inputOutsideIlluminanceProperty" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputOutsideIlluminanceValue"></span>
+                    </label>
+                    <input type="hidden" id="node-input-inputOutsideIlluminanceSource" />
+                    <input type="text" id="node-input-inputOutsideIlluminanceProperty" class="binsoul-roller-shutter-input" />
+                </div>
+            </div>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputOutsideTemperatureTopic">
+                    <label for="node-input-inputOutsideTemperatureTopic" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputOutsideTemperatureTopic"></span>
+                    </label>
+                    <input type="text" id="node-input-inputOutsideTemperatureTopic" class="binsoul-roller-shutter-input" />
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputOutsideTemperatureValue">
+                    <label for="node-input-inputOutsideTemperatureProperty" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputOutsideTemperatureValue"></span>
+                    </label>
+                    <input type="hidden" id="node-input-inputOutsideTemperatureSource" />
+                    <input type="text" id="node-input-inputOutsideTemperatureProperty" class="binsoul-roller-shutter-input" />
+                </div>
+            </div>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputInsideTemperatureTopic">
+                    <label for="node-input-inputInsideTemperatureTopic" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputInsideTemperatureTopic"></span>
+                    </label>
+                    <input type="text" id="node-input-inputInsideTemperatureTopic" class="binsoul-roller-shutter-input" />
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputInsideTemperatureValue">
+                    <label for="node-input-inputInsideTemperatureProperty" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputInsideTemperatureValue"></span>
+                    </label>
+                    <input type="hidden" id="node-input-inputInsideTemperatureSource" />
+                    <input type="text" id="node-input-inputInsideTemperatureProperty" class="binsoul-roller-shutter-input" />
+                </div>
+            </div>
+
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputWindowTopic">
+                    <label for="node-input-inputInsideTemperatureTopic" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputWindowTopic"></span>
+                    </label>
+                    <input type="text" id="node-input-inputWindowTopic" class="binsoul-roller-shutter-input" />
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputWindowValue">
+                    <label for="node-input-inputWindowProperty" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputWindowValue"></span>
+                    </label>
+                    <input type="hidden" id="node-input-inputWindowSource" />
+                    <input type="text" id="node-input-inputWindowProperty" class="binsoul-roller-shutter-input" />
+                </div>
+            </div>
+
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputSunAzimuthTopic">
+                    <label for="node-input-inputInsideTemperatureTopic" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputSunAzimuthTopic"></span>
+                    </label>
+                    <input type="text" id="node-input-inputSunAzimuthTopic" class="binsoul-roller-shutter-input" />
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputSunAzimuthValue">
+                    <label for="node-input-inputSunAzimuthProperty" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputSunAzimuthValue"></span>
+                    </label>
+                    <input type="hidden" id="node-input-inputSunAzimuthSource" />
+                    <input type="text" id="node-input-inputSunAzimuthProperty" class="binsoul-roller-shutter-input" />
+                </div>
+            </div>
+
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputSunAltitudeTopic">
+                    <label for="node-input-inputInsideTemperatureTopic" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputSunAltitudeTopic"></span>
+                    </label>
+                    <input type="text" id="node-input-inputSunAltitudeTopic" class="binsoul-roller-shutter-input" />
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputSunAltitudeValue">
+                    <label for="node-input-inputSunAltitudeProperty" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputSunAltitudeValue"></span>
+                    </label>
+                    <input type="hidden" id="node-input-inputSunAltitudeSource" />
+                    <input type="text" id="node-input-inputSunAltitudeProperty" class="binsoul-roller-shutter-input" />
+                </div>
+            </div>
+
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputPositionTopic">
+                    <label for="node-input-inputInsideTemperatureTopic" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputPositionTopic"></span>
+                    </label>
+                    <input type="text" id="node-input-inputPositionTopic" class="binsoul-roller-shutter-input" />
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputPositionValue">
+                    <label for="node-input-inputPositionProperty" class="binsoul-roller-shutter-label">
+                        <span data-i18n="binsoul-roller-shutter.label.inputPositionValue"></span>
+                    </label>
+                    <input type="hidden" id="node-input-inputPositionSource" />
+                    <input type="text" id="node-input-inputPositionProperty" class="binsoul-roller-shutter-input" />
+                </div>
+            </div>
+        </div>
+
+        <h3><span data-i18n="binsoul-roller-shutter.group.output"></span></h3>
+        <div>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.outputValue">
+                <label for="node-input-outputValueProperty" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.outputValue"></span>
+                </label>
+                <input type="hidden" id="node-input-outputValueSource" />
+                <input type="text" id="node-input-outputValueProperty" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.controllerValueOpen">
+                <label for="node-input-controllerValueOpen" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.controllerValueOpen"></span>
+                </label>
+                <input type="number" min="0" id="node-input-controllerValueOpen" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.deviceOpenClosed">
+                <label for="node-input-controllerValueClosed" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.controllerValueClosed"></span>
+                </label>
+                <input type="number" min="0" id="node-input-controllerValueClosed" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.controllerValueStep">
+                <label for="node-input-controllerValueStep" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.controllerValueStep"></span>
+                </label>
+                <input type="number" min="0" id="node-input-controllerValueStep" class="binsoul-roller-shutter-input" />
+            </div>
+        </div>
+
+        <h3><span data-i18n="binsoul-roller-shutter.group.day"></span></h3>
+        <div>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionDayOpen">
+                <label for="node-input-positionDayOpen" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.positionDayOpen"></span>
+                </label>
+                <input type="number" min="0" id="node-input-positionDayOpen" class="binsoul-roller-shutter-input" />
+            </div>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionDayClosed">
+                <label for="node-input-positionDayClosed" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.positionDayClosed"></span>
+                </label>
+                <input type="number" min="0" id="node-input-positionDayClosed" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartIlluminance">
+                <label for="node-input-dayStartIlluminance" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.dayStartIlluminance"></span>
+                </label>
+                <input type="number" min="0" id="node-input-dayStartIlluminance" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.workdays"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartTimeFromWorkday">
+                    <input type="text" id="node-input-dayStartTimeFromWorkday" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayStartTimeFromWorkday" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayStartTimeFromWorkday"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartTimeToWorkday">
+                    <input type="text" id="node-input-dayStartTimeToWorkday" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayStartTimeToWorkday" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayStartTimeToWorkday"></span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.weekend"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartTimeFromWeekend">
+                    <input type="text" id="node-input-dayStartTimeFromWeekend" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayStartTimeFromWeekend" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayStartTimeFromWeekend"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartTimeToWeekend">
+                    <input type="text" id="node-input-dayStartTimeToWeekend" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayStartTimeToWeekend" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayStartTimeToWeekend"></span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.temperature"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-3">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayTemperatureMin">
+                    <input type="number" min="0" id="node-input-dayTemperatureMin" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayTemperatureMin" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayTemperatureMin"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayTemperatureDesired">
+                    <input type="number" min="0" id="node-input-dayTemperatureDesired" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayTemperatureDesired" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayTemperatureDesired"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayTemperatureMax">
+                    <input type="number" min="0" id="node-input-dayTemperatureMax" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayTemperatureMax" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayTemperatureMax"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <h3><span data-i18n="binsoul-roller-shutter.group.night"></span></h3>
+        <div>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionNightOpen">
+                <label for="node-input-positionNightOpen" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.positionNightOpen"></span>
+                </label>
+                <input type="number" min="0" id="node-input-positionNightOpen" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionNightClosed">
+                <label for="node-input-positionNightClosed" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.positionNightClosed"></span>
+                </label>
+                <input type="number" min="0" id="node-input-positionNightClosed" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionNightTilted">
+                <label for="node-input-positionNightTilted" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.positionNightTilted"></span>
+                </label>
+                <input type="number" min="0" id="node-input-positionNightTilted" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayEndIlluminance">
+                <label for="node-input-dayEndIlluminance" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.dayEndIlluminance"></span>
+                </label>
+                <input type="number" min="0" id="node-input-dayEndIlluminance" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.workdays"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayEndTimeFromWorkday">
+                    <input type="text" id="node-input-dayEndTimeFromWorkday" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayEndTimeFromWorkday" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayEndTimeFromWorkday"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayEndTimeToWorkday">
+                    <input type="text" id="node-input-dayEndTimeToWorkday" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayEndTimeToWorkday" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayEndTimeToWorkday"></span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.weekend"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayEndTimeFromWeekend">
+                    <input type="text" id="node-input-dayEndTimeFromWeekend" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayEndTimeFromWeekend" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayEndTimeFromWeekend"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayEndTimeToWeekend">
+                    <input type="text" id="node-input-dayEndTimeToWeekend" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayEndTimeToWeekend" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.dayEndTimeToWeekend"></span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.temperature"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-3">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightTemperatureMin">
+                    <input type="number" min="0" id="node-input-nightTemperatureMin" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-nightTemperatureMin" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.nightTemperatureMin"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightTemperatureDesired">
+                    <input type="number" min="0" id="node-input-nightTemperatureDesired" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-nightTemperatureDesired" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.nightTemperatureDesired"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightTemperatureMax">
+                    <input type="number" min="0" id="node-input-nightTemperatureMax" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-nightTemperatureMax" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.nightTemperatureMax"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.allowNightChange">
+                <label for="node-input-allowNightChange" class="binsoul-roller-shutter-checkbox">
+                    <input type="checkbox" id="node-input-allowNightChange" />
+                    <span data-i18n="binsoul-roller-shutter.label.allowNightChange"></span>
+                </label>
+            </div>
+        </div>
+
+        <h3><span data-i18n="binsoul-roller-shutter.group.shading"></span></h3>
+        <div>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionShadingOpen">
+                <label for="node-input-positionShadingOpen" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.positionShadingOpen"></span>
+                </label>
+                <input type="number" min="0" id="node-input-positionShadingOpen" class="binsoul-roller-shutter-input" />
+            </div>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionShadingClosed">
+                <label for="node-input-positionShadingClosed" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.positionShadingClosed"></span>
+                </label>
+                <input type="number" min="0" id="node-input-positionShadingClosed" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.illuminance"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.shadingStartIlluminance">
+                    <input type="number" min="0" id="node-input-shadingStartIlluminance" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-shadingStartIlluminance" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.shadingStartIlluminance"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.shadingEndIlluminance">
+                    <input type="number" min="0" id="node-input-shadingEndIlluminance" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-shadingEndIlluminance" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.shadingEndIlluminance"></span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.azimuth"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.shadingStartAzimuth">
+                    <input type="number" min="0" id="node-input-shadingStartAzimuth" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-shadingStartAzimuth" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.shadingStartAzimuth"></span>
+                    </label>
+                </div>
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.shadingEndAzimuth">
+                    <input type="number" min="0" id="node-input-shadingEndAzimuth" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-shadingEndAzimuth" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.shadingEndAzimuth"></span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.altitude"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-3">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.shadingStartAltitude">
+                    <input type="number" min="0" id="node-input-shadingStartAltitude" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-shadingStartAltitude" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.shadingStartAltitude"></span>
+                    </label>
+                </div>
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.shadingEndAltitude">
+                    <input type="number" min="0" id="node-input-shadingEndAltitude" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-shadingEndAltitude" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.shadingEndAltitude"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <h3><span data-i18n="binsoul-roller-shutter.group.miscellaneous"></span></h3>
+        <div>
+            <div class="form-row">
+                <label for="node-input-name" class="binsoul-roller-shutter-label">
+                    <i class="fa fa-tag"></i>
+                    <span data-i18n="node-red:common.label.name"></span>
+                </label>
+                <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name" class="binsoul-roller-shutter-input" />
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .binsoul-roller-shutter-wrapper {
+            width: 25rem;
+            min-width: 20rem;
+        }
+
+        .binsoul-roller-shutter-input {
+            min-width: 100%;
+        }
+
+        .binsoul-roller-shutter-label {
+            width: 100%;
+            min-width: 100%;
+            font-weight: 700 !important;
+            font-size: calc(var(--red-ui-primary-font-size) - 1px) !important;
+            margin-bottom: 2px !important;
+        }
+
+        .binsoul-roller-shutter-sublabel {
+            width: 100%;
+            min-width: 100%;
+            font-weight: normal !important;
+            font-size: calc(var(--red-ui-primary-font-size) - 1px) !important;
+        }
+
+        .binsoul-roller-shutter-checkbox {
+            width: 100%;
+            min-width: 100%;
+        }
+
+        .binsoul-roller-shutter-checkbox input {
+            width: auto !important;
+            vertical-align: baseline !important;
+        }
+
+        .binsoul-roller-shutter-columns {
+            display: flex;
+            gap: 2%;
+        }
+
+        .binsoul-roller-shutter-columns.columns-2 > div,
+        .binsoul-roller-shutter-columns.columns-2 > input,
+        .binsoul-roller-shutter-columns.columns-2 > select {
+            min-width: 49%;
+            max-width: 49%;
+        }
+    </style>
+</script>
