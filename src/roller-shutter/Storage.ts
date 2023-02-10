@@ -71,6 +71,13 @@ function formatTime(timestamp: number) {
     return date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0');
 }
 
+function remap(value: number, fromMinimum: number, fromMaximum: number, toMinimum: number, toMaximum: number) {
+    const fromRange = fromMaximum - fromMinimum;
+    const toRange = toMaximum - toMinimum;
+
+    return ((value - fromMinimum) * toRange) / fromRange + toMinimum;
+}
+
 export class Storage {
     private configuration: Configuration;
 
@@ -150,7 +157,15 @@ export class Storage {
     }
 
     setManualPosition(value: number | null) {
-        this.manualPosition = value;
+        if (value === null) {
+            this.manualPosition = null;
+            return;
+        }
+
+        let result = remap(value, this.configuration.controllerValueClosed, this.configuration.controllerValueOpen, 0, 100);
+        result = Math.round(result);
+
+        this.manualPosition = result;
     }
 
     setFixedTime(time: number): void {
@@ -259,13 +274,7 @@ export class Storage {
 
         this.position = position;
 
-        let result;
-
-        if (this.configuration.controllerValueOpen > this.configuration.controllerValueClosed) {
-            result = this.configuration.controllerValueClosed + (position / 100) * (this.configuration.controllerValueOpen - this.configuration.controllerValueClosed);
-        } else {
-            result = this.configuration.controllerValueOpen + (position / 100) * (this.configuration.controllerValueClosed - this.configuration.controllerValueOpen);
-        }
+        let result = remap(position, 0, 100, this.configuration.controllerValueClosed, this.configuration.controllerValueOpen);
 
         if (this.configuration.controllerValueStep >= 1) {
             result = Math.round(result * this.configuration.controllerValueStep) / this.configuration.controllerValueStep;
