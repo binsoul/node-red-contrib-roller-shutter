@@ -166,6 +166,10 @@ export class Storage {
         result = Math.round(result);
 
         this.manualPosition = result;
+
+        if (this.manualPosition === this.position) {
+            this.manualPosition = null;
+        }
     }
 
     setFixedTime(time: number): void {
