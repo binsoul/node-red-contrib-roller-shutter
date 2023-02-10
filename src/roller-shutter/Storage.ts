@@ -79,7 +79,7 @@ export class Storage {
     private special = '';
     private specialReason = '';
     private fixedTime: number | null = null;
-    private position: number;
+    private position: number | null = null;
 
     private outsideIlluminance: number | null = null;
     private outsideTemperature: number | null = null;
@@ -91,7 +91,6 @@ export class Storage {
 
     constructor(configuration: Configuration) {
         this.configuration = configuration;
-        this.position = configuration.positionDayOpen;
     }
 
     getOutsideIlluminance(): number | null {
@@ -188,7 +187,7 @@ export class Storage {
         return this.specialReason;
     }
 
-    getPosition(): number {
+    getPosition(): number | null {
         return this.position;
     }
 
@@ -389,7 +388,7 @@ export class Storage {
         return position;
     }
 
-    private handleNight(modeChanged: boolean): number {
+    private handleNight(modeChanged: boolean): number | null {
         if (!modeChanged && !this.configuration.allowNightChange) {
             this.special = 'silence';
 

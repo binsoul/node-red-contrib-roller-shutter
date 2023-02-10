@@ -52,6 +52,8 @@ export class UpdateAction implements Action {
             result.setValue('output', position);
         }
 
+        const positionStatus = this.storage.getPosition() !== null ? position : '?';
+
         let mode = this.storage.getMode();
         const special = this.storage.getSpecial();
         if (special !== '') {
@@ -74,9 +76,9 @@ export class UpdateAction implements Action {
         }
 
         if (reason !== '') {
-            result.setNodeStatus(`[${mode}⇒${this.storage.getPosition()}] ${reason}`);
+            result.setNodeStatus(`[${mode}⇒${positionStatus}] ${reason}`);
         } else {
-            result.setNodeStatus(`[${mode}⇒${this.storage.getPosition()}]`);
+            result.setNodeStatus(`[${mode}⇒${positionStatus}]`);
         }
 
         return result;
