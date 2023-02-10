@@ -52,7 +52,7 @@ export class UpdateAction implements Action {
             result.setValue('output', position);
         }
 
-        const positionStatus = this.storage.getPosition() !== null ? position : '?';
+        const positionStatus = this.storage.getPosition() !== null ? this.storage.getPosition() : '?';
 
         let mode = this.storage.getMode();
         const special = this.storage.getSpecial();

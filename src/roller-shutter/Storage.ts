@@ -181,6 +181,10 @@ export class Storage {
     }
 
     getMode(): string {
+        if (this.manualPosition !== null) {
+            return 'manual';
+        }
+
         return this.mode || 'unknown';
     }
 
@@ -207,6 +211,10 @@ export class Storage {
     }
 
     getPosition(): number | null {
+        if (this.manualPosition !== null) {
+            return this.manualPosition;
+        }
+
         return this.position;
     }
 
@@ -270,6 +278,21 @@ export class Storage {
             position = this.handleDay();
         } else if (this.mode === 'night') {
             position = this.handleNight(modeChanged);
+        }
+
+        if (modeChanged) {
+            this.manualPosition = null;
+        }
+
+        if (position === this.manualPosition) {
+            this.manualPosition = null;
+        }
+
+        if (this.manualPosition !== null) {
+            this.setMode(mode, '');
+            this.setSpecial('', '');
+
+            position = this.manualPosition;
         }
 
         if (position === null || position === this.position) {
