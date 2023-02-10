@@ -102,10 +102,10 @@
         "shadingEndAzimuth": "282",
         "shadingEndAltitude": "5",
         "positionDayOpen": "100",
+        "positionDayClosed": "0",
         "positionNightOpen": "100",
         "positionNightClosed": "0",
         "positionNightTilted": "50",
-        "positionDayClosed": "0",
         "positionShadingOpen": "100",
         "positionShadingClosed": "25",
         "allowNightChange": true,
@@ -1219,7 +1219,7 @@
         "onceDelay": 0.1,
         "topic": "position",
         "payload": "100",
-        "payloadType": "str",
+        "payloadType": "num",
         "x": 1230,
         "y": 240,
         "wires": [
@@ -1261,7 +1261,7 @@
         "onceDelay": 0.1,
         "topic": "position",
         "payload": "0",
-        "payloadType": "str",
+        "payloadType": "num",
         "x": 1220,
         "y": 160,
         "wires": [
@@ -1290,9 +1290,34 @@
         "onceDelay": 0.1,
         "topic": "position",
         "payload": "50",
-        "payloadType": "str",
+        "payloadType": "num",
         "x": 1220,
         "y": 200,
+        "wires": [
+            [
+                "486ba8bc04695630"
+            ]
+        ]
+    },
+    {
+        "id": "cbb06b0f6ce987cc",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "unsetManualPosition",
+        "props": [
+            {
+                "p": "command",
+                "v": "unsetManualPosition",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1250,
+        "y": 280,
         "wires": [
             [
                 "486ba8bc04695630"

@@ -5,6 +5,7 @@ import { NodeMessageInFlow } from 'node-red';
 import { SensorAction } from './Action/SensorAction';
 import { SetFixedTimeAction } from './Action/SetFixedTimeAction';
 import { UnsetFixedTimeAction } from './Action/UnsetFixedTimeAction';
+import { UnsetManualPositionAction } from './Action/UnsetManualPositionAction';
 import { UpdateAction } from './Action/UpdateAction';
 import type { Configuration } from './Configuration';
 import { Storage } from './Storage';
@@ -40,6 +41,8 @@ export class ActionFactory implements ActionFactoryInterface {
                     return [new SetFixedTimeAction(this.storage), new UpdateAction(this.configuration, this.storage, true)];
                 case 'unsetfixedtime':
                     return [new UnsetFixedTimeAction(this.storage), new UpdateAction(this.configuration, this.storage, true)];
+                case 'unsetmanualposition':
+                    return [new UnsetManualPositionAction(this.storage), new UpdateAction(this.configuration, this.storage, true)];
                 case 'update':
                     return new UpdateAction(this.configuration, this.storage, false);
             }
