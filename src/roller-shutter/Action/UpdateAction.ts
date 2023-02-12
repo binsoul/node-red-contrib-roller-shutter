@@ -51,14 +51,14 @@ export class UpdateAction implements Action {
 
         const previousMode = this.storage.getMode();
 
-        const position = this.storage.update(timestamp);
+        const output = this.storage.update(timestamp);
 
-        if (position !== null) {
+        if (output !== null) {
             if (this.storage.getMode() !== previousMode && this.scheduleOutputCallback !== null && this.configuration.outputDelayMinimum !== null && this.configuration.outputDelayMaximum !== null) {
                 const delay = Math.round(this.configuration.outputDelayMinimum + Math.random() * (this.configuration.outputDelayMaximum - this.configuration.outputDelayMinimum));
-                this.scheduleOutputCallback(delay, position);
+                this.scheduleOutputCallback(delay, output);
             } else {
-                result.setValue('output', position);
+                result.setValue('output', output);
             }
         }
 

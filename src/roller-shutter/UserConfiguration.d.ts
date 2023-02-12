@@ -83,7 +83,7 @@ export interface UserConfigurationOptions {
     shadingEndAzimuth?: number | null;
     shadingEndAltitude?: number | null;
 
-    allowNightChange: boolean;
+    allowNightChange: boolean | null;
 }
 
 /**

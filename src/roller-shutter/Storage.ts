@@ -8,6 +8,9 @@ interface ModeConfiguration {
     temperatureMax: number | null;
 }
 
+/**
+ * Parses the given time string and return a modified Date object for the given timestamp.
+ */
 function parseTime(time: string, timestamp: Date): Date | null {
     let hour, minute;
     const pm = time.match(/p/i) !== null;
@@ -51,6 +54,9 @@ function parseTime(time: string, timestamp: Date): Date | null {
     return result;
 }
 
+/**
+ * Returns either the time for workdays or the time for weekends depending on the day of the week.
+ */
 function selectTime(timestamp: Date, workdayTime: string | null, weekendTime: string | null): number | null {
     const dayOfWeek = timestamp.getDay();
     const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
@@ -73,12 +79,18 @@ function selectTime(timestamp: Date, workdayTime: string | null, weekendTime: st
     return parsedTimeWeekend !== null ? parsedTimeWeekend.getTime() : null;
 }
 
+/**
+ * Outputs a formated time string.
+ */
 function formatTime(timestamp: number) {
     const date = new Date(timestamp);
 
     return date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0');
 }
 
+/**
+ * Maps a value from one number range to another number range.
+ */
 function remap(value: number, fromMinimum: number, fromMaximum: number, toMinimum: number, toMaximum: number) {
     const fromRange = fromMaximum - fromMinimum;
     const toRange = toMaximum - toMinimum;
@@ -100,6 +112,7 @@ export class Storage {
     private outsideTemperature: number | null = null;
     private insideTemperature: number | null = null;
     private window: 'open' | 'closed' | 'tilted' | null = null;
+    private windowChanged = false;
     private sunAzimuth: number | null = null;
     private sunAltitude: number | null = null;
     private manualPosition: number | null = null;
@@ -138,6 +151,7 @@ export class Storage {
 
     setWindow(value: string) {
         if (value === 'open' || value === 'closed' || value === 'tilted') {
+            this.windowChanged = this.window !== value;
             this.window = value;
         } else {
             this.window = null;
@@ -451,12 +465,6 @@ export class Storage {
     }
 
     private handleNight(modeChanged: boolean): number | null {
-        if (!modeChanged && !this.configuration.allowNightChange && this.mode === 'night') {
-            this.special = 'silence';
-
-            return this.position;
-        }
-
         const configuration = this.getConfiguration(this.mode);
 
         this.specialReason = '';
@@ -479,12 +487,21 @@ export class Storage {
                 reason = 'window tilted';
                 special = 'window';
             } else {
-                notReason = 'window closed';
+                notReason = this.windowChanged ? 'window closed' : '';
             }
         }
 
+        let isSilence = false;
+        if (!this.windowChanged && !modeChanged && !this.configuration.allowNightChange && this.mode === 'night') {
+            // if disallowed don't change the position at night except if the mode changes from evening to night
+            special = this.special;
+            reason = 'silence';
+            position = this.position ?? configuration.positionClosed;
+            isSilence = true;
+        }
+
         let isTemperature = false;
-        if (this.insideTemperature !== null && isWindowOpenOrTilted) {
+        if (this.insideTemperature !== null && !isSilence) {
             if (configuration.temperatureMax !== null && this.insideTemperature > configuration.temperatureMax) {
                 isTemperature = true;
                 position = configuration.positionOpen;
@@ -498,7 +515,9 @@ export class Storage {
             }
         }
 
-        if (isWindowOpenOrTilted || isTemperature) {
+        this.windowChanged = false;
+
+        if (isWindowOpenOrTilted || isSilence || isTemperature) {
             this.setSpecial(special, reason);
 
             return position;
@@ -509,6 +528,9 @@ export class Storage {
         }
     }
 
+    /**
+     * Returns the configuration for the given mode.
+     */
     private getConfiguration(mode: string): ModeConfiguration {
         if (mode === 'morning') {
             return {

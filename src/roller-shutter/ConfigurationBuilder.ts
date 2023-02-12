@@ -105,6 +105,7 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
     const shadingEndIlluminance = getNumber(config.shadingEndIlluminance, null);
     const shadingEndAzimuth = getNumber(config.shadingEndAzimuth, null);
     const shadingEndAltitude = getNumber(config.shadingEndAltitude, null);
+    const allowNightChange = !!config.allowNightChange;
 
     return new Configuration(
         inputOutsideIlluminanceSource,
@@ -176,5 +177,6 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
         shadingEndIlluminance,
         shadingEndAzimuth,
         shadingEndAltitude,
+        allowNightChange,
     );
 }
