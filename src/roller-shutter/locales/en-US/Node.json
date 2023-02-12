@@ -16,9 +16,12 @@
             "inputPositionValue": "Position value",
             "inputPositionTopic": "Position topic",
             "outputValue": "Output target",
-            "controllerValueStep": "Output step",
-            "controllerValueOpen": "Output maximum (open)",
-            "controllerValueClosed": "Output minimum (closed)",
+            "outputPositionOpen": "Output maximum (open)",
+            "outputPositionClosed": "Output minimum (closed)",
+            "outputPositionStep": "Output step",
+            "outputDelay": "Output delay in seconds",
+            "outputDelayMinimum": "Minimum",
+            "outputDelayMaximum": "Maximum",
             "morningTemperatureMin": "Minimum",
             "morningTemperatureDesired": "Desired",
             "morningTemperatureMax": "Maximum",
@@ -65,12 +68,6 @@
             "allowNightChange": "Allow position changes"
         },
         "help": {
-            "inputIlluminanceValue": "",
-            "inputIlluminanceTopic": "",
-            "outputValue": "",
-            "controllerValueStep": "",
-            "controllerValueOpen": "",
-            "controllerValueClosed": ""
         },
         "group": {
             "input": "Input",

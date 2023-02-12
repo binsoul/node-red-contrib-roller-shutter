@@ -89,20 +89,30 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             value: 'msg',
             required: true,
         },
-        controllerValueStep: {
-            value: 1,
-            required: true,
-            validate: RED.validators.number(false),
-        },
-        controllerValueOpen: {
+        outputPositionOpen: {
             value: 100,
             required: true,
             validate: RED.validators.number(false),
         },
-        controllerValueClosed: {
+        outputPositionClosed: {
             value: 0,
             required: true,
             validate: RED.validators.number(false),
+        },
+        outputPositionStep: {
+            value: 1,
+            required: true,
+            validate: RED.validators.number(false),
+        },
+        outputDelayMinimum: {
+            value: null,
+            required: false,
+            validate: RED.validators.number(true),
+        },
+        outputDelayMaximum: {
+            value: null,
+            required: false,
+            validate: RED.validators.number(true),
         },
         morningTemperatureMin: {
             value: null,

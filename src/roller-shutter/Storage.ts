@@ -170,7 +170,7 @@ export class Storage {
             return;
         }
 
-        let result = remap(value, this.configuration.controllerValueClosed, this.configuration.controllerValueOpen, 0, 100);
+        let result = remap(value, this.configuration.outputPositionClosed, this.configuration.outputPositionOpen, 0, 100);
         result = Math.round(result);
 
         this.manualPosition = result;
@@ -327,12 +327,12 @@ export class Storage {
 
         this.position = position;
 
-        let result = remap(position, 0, 100, this.configuration.controllerValueClosed, this.configuration.controllerValueOpen);
+        let result = remap(position, 0, 100, this.configuration.outputPositionClosed, this.configuration.outputPositionOpen);
 
-        if (this.configuration.controllerValueStep >= 1) {
-            result = Math.round(result * this.configuration.controllerValueStep) / this.configuration.controllerValueStep;
+        if (this.configuration.outputPositionStep >= 1) {
+            result = Math.round(result * this.configuration.outputPositionStep) / this.configuration.outputPositionStep;
         } else {
-            result = Math.round(result / this.configuration.controllerValueStep) * this.configuration.controllerValueStep;
+            result = Math.round(result / this.configuration.outputPositionStep) * this.configuration.outputPositionStep;
         }
 
         return result;

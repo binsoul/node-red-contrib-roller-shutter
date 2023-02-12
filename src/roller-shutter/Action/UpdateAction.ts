@@ -6,11 +6,13 @@ export class UpdateAction implements Action {
     private readonly configuration: Configuration;
     private readonly storage: Storage;
     private readonly ignoreTimestamp: boolean;
+    private scheduleOutputCallback: null | ((delay: number, output: number) => void);
 
-    constructor(configuration: Configuration, storage: Storage, ignoreTimestamp: boolean) {
+    constructor(configuration: Configuration, storage: Storage, ignoreTimestamp: boolean, scheduleOutputCallback: null | ((delay: number, output: number) => void)) {
         this.configuration = configuration;
         this.storage = storage;
         this.ignoreTimestamp = ignoreTimestamp;
+        this.scheduleOutputCallback = scheduleOutputCallback;
     }
 
     defineInput(): InputDefinition {
@@ -47,9 +49,17 @@ export class UpdateAction implements Action {
             timestamp = input.getMessage().timestamp;
         }
 
+        const previousMode = this.storage.getMode();
+
         const position = this.storage.update(timestamp);
+
         if (position !== null) {
-            result.setValue('output', position);
+            if (this.storage.getMode() !== previousMode && this.scheduleOutputCallback !== null && this.configuration.outputDelayMinimum !== null && this.configuration.outputDelayMaximum !== null) {
+                const delay = Math.round(this.configuration.outputDelayMinimum + Math.random() * (this.configuration.outputDelayMaximum - this.configuration.outputDelayMinimum));
+                this.scheduleOutputCallback(delay, position);
+            } else {
+                result.setValue('output', position);
+            }
         }
 
         const positionStatus = this.storage.getPosition() !== null ? this.storage.getPosition() : '?';

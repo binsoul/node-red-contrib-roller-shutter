@@ -59,9 +59,11 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
     const outputValueProperty = getString(config.inputOutsideIlluminanceProperty, 'payload');
     const outputValueTarget = getString(config.inputOutsideIlluminanceSource, 'msg');
 
-    const controllerValueOpen = getNumber(config.controllerValueOpen, 100);
-    const controllerValueClosed = getNumber(config.controllerValueClosed, 0);
-    const controllerValueStep = getNumber(config.controllerValueStep, 1);
+    const outputPositionOpen = getNumber(config.outputPositionOpen, 100);
+    const outputPositionClosed = getNumber(config.outputPositionClosed, 0);
+    const outputPositionStep = getNumber(config.outputPositionStep, 1);
+    const outputDelayMinimum = getNumber(config.outputDelayMinimum, null);
+    const outputDelayMaximum = getNumber(config.outputDelayMaximum, null);
     const morningPositionOpen = getNumber(config.morningPositionOpen, 100);
     const morningPositionClosed = getNumber(config.morningPositionClosed, 0);
     const dayPositionOpen = getNumber(config.dayPositionOpen, 100);
@@ -128,9 +130,11 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
         inputPositionTopic.toLowerCase(),
         outputValueProperty,
         outputValueTarget,
-        controllerValueOpen,
-        controllerValueClosed,
-        controllerValueStep,
+        outputPositionOpen,
+        outputPositionClosed,
+        outputPositionStep,
+        outputDelayMinimum,
+        outputDelayMaximum,
         morningPositionOpen,
         morningPositionClosed,
         dayPositionOpen,

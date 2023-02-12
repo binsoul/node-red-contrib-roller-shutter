@@ -29,9 +29,11 @@ export interface UserConfigurationOptions {
     outputValueProperty: string;
     outputValueTarget: string;
 
-    controllerValueOpen: number;
-    controllerValueClosed: number;
-    controllerValueStep: number;
+    outputPositionOpen: number;
+    outputPositionClosed: number;
+    outputPositionStep: number;
+    outputDelayMinimum: number | null;
+    outputDelayMaximum: number | null;
 
     morningPositionOpen: number;
     morningPositionClosed: number;

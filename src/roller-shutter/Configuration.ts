@@ -26,9 +26,12 @@ export class Configuration {
     inputPositionProperty = 'payload';
     inputPositionTopic = 'position';
 
-    controllerValueOpen = 100;
-    controllerValueClosed = 0;
-    controllerValueStep = 1;
+    outputPositionOpen = 100;
+    outputPositionClosed = 0;
+    outputPositionStep = 1;
+
+    outputDelayMinimum: number | null = null;
+    outputDelayMaximum: number | null = null;
 
     morningPositionOpen = 100;
     morningPositionClosed = 0;
@@ -103,9 +106,11 @@ export class Configuration {
         inputPositionTopic = '',
         outputValueProperty = 'payload',
         outputValueTarget = 'msg',
-        controllerValueOpen = 100,
-        controllerValueClosed = 0,
-        controllerValueStep = 1,
+        outputPositionOpen = 100,
+        outputPositionClosed = 0,
+        outputPositionStep = 1,
+        outputDelayMinimum: number | null = null,
+        outputDelayMaximum: number | null = null,
         morningPositionOpen = 100,
         morningPositionClosed = 0,
         dayPositionOpen = 100,
@@ -172,9 +177,11 @@ export class Configuration {
         this.inputOutsideIlluminanceSource = inputOutsideIlluminanceSource;
         this.outputValueProperty = outputValueProperty;
         this.outputValueTarget = outputValueTarget;
-        this.controllerValueOpen = controllerValueOpen;
-        this.controllerValueClosed = controllerValueClosed;
-        this.controllerValueStep = controllerValueStep;
+        this.outputPositionOpen = outputPositionOpen;
+        this.outputPositionClosed = outputPositionClosed;
+        this.outputPositionStep = outputPositionStep;
+        this.outputDelayMinimum = outputDelayMinimum;
+        this.outputDelayMaximum = outputDelayMaximum;
         this.morningPositionOpen = morningPositionOpen;
         this.morningPositionClosed = morningPositionClosed;
         this.dayPositionOpen = dayPositionOpen;

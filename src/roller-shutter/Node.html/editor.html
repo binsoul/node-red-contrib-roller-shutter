@@ -391,6 +391,7 @@
                     <input type="text" id="node-input-inputOutsideTemperatureProperty" class="binsoul-roller-shutter-input" />
                 </div>
             </div>
+
             <div class="binsoul-roller-shutter-columns columns-2">
                 <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.inputInsideTemperatureTopic">
                     <label for="node-input-inputInsideTemperatureTopic" class="binsoul-roller-shutter-label">
@@ -487,25 +488,44 @@
                 <input type="text" id="node-input-outputValueProperty" class="binsoul-roller-shutter-input" />
             </div>
 
-            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.controllerValueOpen">
-                <label for="node-input-controllerValueOpen" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.controllerValueOpen"></span>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.outputPositionOpen">
+                <label for="node-input-outputPositionOpen" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.outputPositionOpen"></span>
                 </label>
-                <input type="number" min="0" id="node-input-controllerValueOpen" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" id="node-input-outputPositionOpen" class="binsoul-roller-shutter-input" />
             </div>
 
             <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.deviceOpenClosed">
-                <label for="node-input-controllerValueClosed" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.controllerValueClosed"></span>
+                <label for="node-input-outputPositionClosed" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.outputPositionClosed"></span>
                 </label>
-                <input type="number" min="0" id="node-input-controllerValueClosed" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" id="node-input-outputPositionClosed" class="binsoul-roller-shutter-input" />
             </div>
 
-            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.controllerValueStep">
-                <label for="node-input-controllerValueStep" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.controllerValueStep"></span>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.outputPositionStep">
+                <label for="node-input-outputPositionStep" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.outputPositionStep"></span>
                 </label>
-                <input type="number" min="0" step="0.01" id="node-input-controllerValueStep" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" step="0.01" id="node-input-outputPositionStep" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.outputDelay"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.outputDelayMinimum">
+                    <input type="number" min="0" id="node-input-outputDelayMinimum" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-outputDelayMinimum" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.outputDelayMinimum"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.outputDelayMaximum">
+                    <input type="number" min="0" id="node-input-outputDelayMaximum" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-outputDelayMaximum" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.outputDelayMaximum"></span>
+                    </label>
+                </div>
             </div>
         </div>
 
