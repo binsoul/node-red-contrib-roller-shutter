@@ -104,6 +104,21 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             required: true,
             validate: RED.validators.number(false),
         },
+        morningTemperatureMin: {
+            value: null,
+            required: false,
+            validate: RED.validators.number(true),
+        },
+        morningTemperatureDesired: {
+            value: null,
+            required: false,
+            validate: RED.validators.number(true),
+        },
+        morningTemperatureMax: {
+            value: null,
+            required: false,
+            validate: RED.validators.number(true),
+        },
         dayTemperatureMin: {
             value: null,
             required: false,
@@ -115,6 +130,21 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             validate: RED.validators.number(true),
         },
         dayTemperatureMax: {
+            value: null,
+            required: false,
+            validate: RED.validators.number(true),
+        },
+        eveningTemperatureMin: {
+            value: null,
+            required: false,
+            validate: RED.validators.number(true),
+        },
+        eveningTemperatureDesired: {
+            value: null,
+            required: false,
+            validate: RED.validators.number(true),
+        },
+        eveningTemperatureMax: {
             value: null,
             required: false,
             validate: RED.validators.number(true),
@@ -134,52 +164,62 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             required: false,
             validate: RED.validators.number(true),
         },
-        dayStartIlluminance: {
+        morningStartIlluminance: {
             value: 25,
             required: true,
             validate: RED.validators.number(true),
         },
-        dayStartTimeFromWorkday: {
-            value: null,
-            required: false,
-            validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
-        },
-        dayStartTimeFromWeekend: {
-            value: null,
-            required: false,
-            validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
-        },
-        dayStartTimeToWorkday: {
-            value: null,
-            required: false,
-            validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
-        },
-        dayStartTimeToWeekend: {
-            value: null,
-            required: false,
-            validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
-        },
-        dayEndIlluminance: {
+        dayStartIlluminance: {
             value: 50,
             required: true,
             validate: RED.validators.number(true),
         },
-        dayEndTimeFromWorkday: {
+        eveningStartIlluminance: {
+            value: 50,
+            required: true,
+            validate: RED.validators.number(true),
+        },
+        nightStartIlluminance: {
+            value: 25,
+            required: true,
+            validate: RED.validators.number(true),
+        },
+        nightStopTimeWorkday: {
             value: null,
             required: false,
             validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
         },
-        dayEndTimeFromWeekend: {
+        nightStopTimeWeekend: {
             value: null,
             required: false,
             validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
         },
-        dayEndTimeToWorkday: {
+        dayStartTimeWorkday: {
             value: null,
             required: false,
             validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
         },
-        dayEndTimeToWeekend: {
+        dayStartTimeWeekend: {
+            value: null,
+            required: false,
+            validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
+        },
+        dayStopTimeWorkday: {
+            value: null,
+            required: false,
+            validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
+        },
+        dayStopTimeWeekend: {
+            value: null,
+            required: false,
+            validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
+        },
+        nightStartTimeWorkday: {
+            value: null,
+            required: false,
+            validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
+        },
+        nightStartTimeWeekend: {
             value: null,
             required: false,
             validate: RED.validators.regex(new RegExp('([0-9](2):[0-9](2))?')),
@@ -214,37 +254,57 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             required: false,
             validate: RED.validators.number(true),
         },
-        positionDayOpen: {
+        morningPositionOpen: {
             value: 100,
             required: true,
             validate: RED.validators.number(true),
         },
-        positionDayClosed: {
+        morningPositionClosed: {
             value: 0,
             required: true,
             validate: RED.validators.number(true),
         },
-        positionNightOpen: {
+        dayPositionOpen: {
             value: 100,
             required: true,
             validate: RED.validators.number(true),
         },
-        positionNightClosed: {
+        dayPositionClosed: {
             value: 0,
             required: true,
             validate: RED.validators.number(true),
         },
-        positionNightTilted: {
+        eveningPositionOpen: {
+            value: 100,
+            required: true,
+            validate: RED.validators.number(true),
+        },
+        eveningPositionClosed: {
+            value: 0,
+            required: true,
+            validate: RED.validators.number(true),
+        },
+        nightPositionOpen: {
+            value: 100,
+            required: true,
+            validate: RED.validators.number(true),
+        },
+        nightPositionClosed: {
+            value: 0,
+            required: true,
+            validate: RED.validators.number(true),
+        },
+        nightPositionTilted: {
             value: 50,
             required: true,
             validate: RED.validators.number(true),
         },
-        positionShadingOpen: {
+        shadingPositionOpen: {
             value: 100,
             required: true,
             validate: RED.validators.number(true),
         },
-        positionShadingClosed: {
+        shadingPositionClosed: {
             value: 25,
             required: true,
             validate: RED.validators.number(true),

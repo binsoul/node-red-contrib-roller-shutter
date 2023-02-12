@@ -33,33 +33,45 @@ export interface UserConfigurationOptions {
     controllerValueClosed: number;
     controllerValueStep: number;
 
-    positionDayOpen: number;
-    positionNightOpen: number;
-    positionNightClosed: number;
-    positionNightTilted: number;
-    positionDayClosed: number;
-    positionShadingOpen: number;
-    positionShadingClosed: number;
+    morningPositionOpen: number;
+    morningPositionClosed: number;
+    dayPositionOpen: number;
+    dayPositionClosed: number;
+    eveningPositionOpen: number;
+    eveningPositionClosed: number;
+    nightPositionOpen: number;
+    nightPositionClosed: number;
+    nightPositionTilted: number;
+    shadingPositionOpen: number;
+    shadingPositionClosed: number;
 
+    morningTemperatureMin?: number | null;
+    morningTemperatureDesired?: number | null;
+    morningTemperatureMax?: number | null;
     dayTemperatureMin?: number | null;
     dayTemperatureDesired?: number | null;
     dayTemperatureMax?: number | null;
-
+    eveningTemperatureMin?: number | null;
+    eveningTemperatureDesired?: number | null;
+    eveningTemperatureMax?: number | null;
     nightTemperatureMin?: number | null;
     nightTemperatureDesired?: number | null;
     nightTemperatureMax?: number | null;
 
+    morningStartIlluminance: number;
     dayStartIlluminance: number;
-    dayStartTimeFromWorkday?: string | null;
-    dayStartTimeFromWeekend?: string | null;
-    dayStartTimeToWorkday?: string | null;
-    dayStartTimeToWeekend?: string | null;
+    eveningStartIlluminance: number;
+    nightStartIlluminance: number;
 
-    dayEndIlluminance: number;
-    dayEndTimeFromWorkday?: string | null;
-    dayEndTimeFromWeekend?: string | null;
-    dayEndTimeToWorkday?: string | null;
-    dayEndTimeToWeekend?: string | null;
+    nightStopTimeWorkday?: string | null;
+    nightStopTimeWeekend?: string | null;
+    dayStartTimeWorkday?: string | null;
+    dayStartTimeWeekend?: string | null;
+
+    dayStopTimeWorkday?: string | null;
+    dayStopTimeWeekend?: string | null;
+    nightStartTimeWorkday?: string | null;
+    nightStartTimeWeekend?: string | null;
 
     shadingStartIlluminance?: number | null;
     shadingStartAzimuth?: number | null;

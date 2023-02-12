@@ -1,18 +1,86 @@
 <script data-template-name="binsoul-roller-shutter" type="text/html">
     <div class="binsoul-roller-shutter-wrapper">
+        <h3><span data-i18n="binsoul-roller-shutter.group.morning"></span></h3>
+        <div>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.morningPositionOpen">
+                <label for="node-input-morningPositionOpen" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.morningPositionOpen"></span>
+                </label>
+                <input type="number" min="0" id="node-input-morningPositionOpen" class="binsoul-roller-shutter-input" />
+            </div>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.morningPositionClosed">
+                <label for="node-input-morningPositionClosed" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.morningPositionClosed"></span>
+                </label>
+                <input type="number" min="0" id="node-input-morningPositionClosed" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.morningStartIlluminance">
+                <label for="node-input-morningStartIlluminance" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.morningStartIlluminance"></span>
+                </label>
+                <input type="number" min="0" id="node-input-morningStartIlluminance" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.nightStopTime"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightStopTimeWorkday">
+                    <input type="text" id="node-input-nightStopTimeWorkday" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-nightStopTimeWorkday" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.workdays"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightStopTimeWeekend">
+                    <input type="text" id="node-input-nightStopTimeWeekend" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-nightStopTimeWeekend" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.weekend"></span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.temperature"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-3">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.morningTemperatureMin">
+                    <input type="number" min="0" id="node-input-morningTemperatureMin" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-morningTemperatureMin" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.morningTemperatureMin"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.morningTemperatureDesired">
+                    <input type="number" min="0" id="node-input-morningTemperatureDesired" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-morningTemperatureDesired" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.morningTemperatureDesired"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.morningTemperatureMax">
+                    <input type="number" min="0" id="node-input-morningTemperatureMax" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-morningTemperatureMax" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.morningTemperatureMax"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
         <h3><span data-i18n="binsoul-roller-shutter.group.day"></span></h3>
         <div>
-            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionDayOpen">
-                <label for="node-input-positionDayOpen" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.positionDayOpen"></span>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayPositionOpen">
+                <label for="node-input-dayPositionOpen" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.dayPositionOpen"></span>
                 </label>
-                <input type="number" min="0" id="node-input-positionDayOpen" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" id="node-input-dayPositionOpen" class="binsoul-roller-shutter-input" />
             </div>
-            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionDayClosed">
-                <label for="node-input-positionDayClosed" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.positionDayClosed"></span>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayPositionClosed">
+                <label for="node-input-dayPositionClosed" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.dayPositionClosed"></span>
                 </label>
-                <input type="number" min="0" id="node-input-positionDayClosed" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" id="node-input-dayPositionClosed" class="binsoul-roller-shutter-input" />
             </div>
 
             <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartIlluminance">
@@ -23,39 +91,19 @@
             </div>
 
             <label class="binsoul-roller-shutter-label">
-                <span data-i18n="binsoul-roller-shutter.label.workdays"></span>
+                <span data-i18n="binsoul-roller-shutter.label.dayStartTime"></span>
             </label>
             <div class="binsoul-roller-shutter-columns columns-2">
-                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartTimeFromWorkday">
-                    <input type="text" id="node-input-dayStartTimeFromWorkday" class="binsoul-roller-shutter-input" />
-                    <label for="node-input-dayStartTimeFromWorkday" class="binsoul-roller-shutter-sublabel">
-                        <span data-i18n="binsoul-roller-shutter.label.dayStartTimeFromWorkday"></span>
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartTimeWorkday">
+                    <input type="text" id="node-input-dayStartTimeWorkday" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayStartTimeWorkday" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.workdays"></span>
                     </label>
                 </div>
-
-                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartTimeToWorkday">
-                    <input type="text" id="node-input-dayStartTimeToWorkday" class="binsoul-roller-shutter-input" />
-                    <label for="node-input-dayStartTimeToWorkday" class="binsoul-roller-shutter-sublabel">
-                        <span data-i18n="binsoul-roller-shutter.label.dayStartTimeToWorkday"></span>
-                    </label>
-                </div>
-            </div>
-
-            <label class="binsoul-roller-shutter-label">
-                <span data-i18n="binsoul-roller-shutter.label.weekend"></span>
-            </label>
-            <div class="binsoul-roller-shutter-columns columns-2">
-                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartTimeFromWeekend">
-                    <input type="text" id="node-input-dayStartTimeFromWeekend" class="binsoul-roller-shutter-input" />
-                    <label for="node-input-dayStartTimeFromWeekend" class="binsoul-roller-shutter-sublabel">
-                        <span data-i18n="binsoul-roller-shutter.label.dayStartTimeFromWeekend"></span>
-                    </label>
-                </div>
-
-                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartTimeToWeekend">
-                    <input type="text" id="node-input-dayStartTimeToWeekend" class="binsoul-roller-shutter-input" />
-                    <label for="node-input-dayStartTimeToWeekend" class="binsoul-roller-shutter-sublabel">
-                        <span data-i18n="binsoul-roller-shutter.label.dayStartTimeToWeekend"></span>
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStartTimeWeekend">
+                    <input type="text" id="node-input-dayStartTimeWeekend" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayStartTimeWeekend" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.weekend"></span>
                     </label>
                 </div>
             </div>
@@ -87,70 +135,119 @@
             </div>
         </div>
 
+        <h3><span data-i18n="binsoul-roller-shutter.group.evening"></span></h3>
+        <div>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.eveningPositionOpen">
+                <label for="node-input-eveningPositionOpen" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.eveningPositionOpen"></span>
+                </label>
+                <input type="number" min="0" id="node-input-eveningPositionOpen" class="binsoul-roller-shutter-input" />
+            </div>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.eveningPositionClosed">
+                <label for="node-input-eveningPositionClosed" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.eveningPositionClosed"></span>
+                </label>
+                <input type="number" min="0" id="node-input-eveningPositionClosed" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.eveningStartIlluminance">
+                <label for="node-input-eveningStartIlluminance" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.eveningStartIlluminance"></span>
+                </label>
+                <input type="number" min="0" id="node-input-eveningStartIlluminance" class="binsoul-roller-shutter-input" />
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.dayStopTime"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-2">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStopTimeWorkday">
+                    <input type="text" id="node-input-dayStopTimeWorkday" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayStopTimeWorkday" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.workdays"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayStopTimeWeekend">
+                    <input type="text" id="node-input-dayStopTimeWeekend" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-dayStopTimeWeekend" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.weekend"></span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="binsoul-roller-shutter-label">
+                <span data-i18n="binsoul-roller-shutter.label.temperature"></span>
+            </label>
+            <div class="binsoul-roller-shutter-columns columns-3">
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.eveningTemperatureMin">
+                    <input type="number" min="0" id="node-input-eveningTemperatureMin" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-eveningTemperatureMin" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.eveningTemperatureMin"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.eveningTemperatureDesired">
+                    <input type="number" min="0" id="node-input-eveningTemperatureDesired" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-eveningTemperatureDesired" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.eveningTemperatureDesired"></span>
+                    </label>
+                </div>
+
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.eveningTemperatureMax">
+                    <input type="number" min="0" id="node-input-eveningTemperatureMax" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-eveningTemperatureMax" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.eveningTemperatureMax"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
         <h3><span data-i18n="binsoul-roller-shutter.group.night"></span></h3>
         <div>
-            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionNightOpen">
-                <label for="node-input-positionNightOpen" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.positionNightOpen"></span>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightPositionOpen">
+                <label for="node-input-nightPositionOpen" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.nightPositionOpen"></span>
                 </label>
-                <input type="number" min="0" id="node-input-positionNightOpen" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" id="node-input-nightPositionOpen" class="binsoul-roller-shutter-input" />
             </div>
 
-            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionNightClosed">
-                <label for="node-input-positionNightClosed" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.positionNightClosed"></span>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightPositionClosed">
+                <label for="node-input-nightPositionClosed" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.nightPositionClosed"></span>
                 </label>
-                <input type="number" min="0" id="node-input-positionNightClosed" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" id="node-input-nightPositionClosed" class="binsoul-roller-shutter-input" />
             </div>
 
-            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionNightTilted">
-                <label for="node-input-positionNightTilted" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.positionNightTilted"></span>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightPositionTilted">
+                <label for="node-input-nightPositionTilted" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.nightPositionTilted"></span>
                 </label>
-                <input type="number" min="0" id="node-input-positionNightTilted" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" id="node-input-nightPositionTilted" class="binsoul-roller-shutter-input" />
             </div>
 
-            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayEndIlluminance">
-                <label for="node-input-dayEndIlluminance" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.dayEndIlluminance"></span>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightStartIlluminance">
+                <label for="node-input-nightStartIlluminance" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.nightStartIlluminance"></span>
                 </label>
-                <input type="number" min="0" id="node-input-dayEndIlluminance" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" id="node-input-nightStartIlluminance" class="binsoul-roller-shutter-input" />
             </div>
 
             <label class="binsoul-roller-shutter-label">
-                <span data-i18n="binsoul-roller-shutter.label.workdays"></span>
+                <span data-i18n="binsoul-roller-shutter.label.nightStartTime"></span>
             </label>
             <div class="binsoul-roller-shutter-columns columns-2">
-                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayEndTimeFromWorkday">
-                    <input type="text" id="node-input-dayEndTimeFromWorkday" class="binsoul-roller-shutter-input" />
-                    <label for="node-input-dayEndTimeFromWorkday" class="binsoul-roller-shutter-sublabel">
-                        <span data-i18n="binsoul-roller-shutter.label.dayEndTimeFromWorkday"></span>
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightStartTimeWorkday">
+                    <input type="text" id="node-input-nightStartTimeWorkday" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-nightStartTimeWorkday" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.workdays"></span>
                     </label>
                 </div>
 
-                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayEndTimeToWorkday">
-                    <input type="text" id="node-input-dayEndTimeToWorkday" class="binsoul-roller-shutter-input" />
-                    <label for="node-input-dayEndTimeToWorkday" class="binsoul-roller-shutter-sublabel">
-                        <span data-i18n="binsoul-roller-shutter.label.dayEndTimeToWorkday"></span>
-                    </label>
-                </div>
-            </div>
-
-            <label class="binsoul-roller-shutter-label">
-                <span data-i18n="binsoul-roller-shutter.label.weekend"></span>
-            </label>
-            <div class="binsoul-roller-shutter-columns columns-2">
-                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayEndTimeFromWeekend">
-                    <input type="text" id="node-input-dayEndTimeFromWeekend" class="binsoul-roller-shutter-input" />
-                    <label for="node-input-dayEndTimeFromWeekend" class="binsoul-roller-shutter-sublabel">
-                        <span data-i18n="binsoul-roller-shutter.label.dayEndTimeFromWeekend"></span>
-                    </label>
-                </div>
-
-                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.dayEndTimeToWeekend">
-                    <input type="text" id="node-input-dayEndTimeToWeekend" class="binsoul-roller-shutter-input" />
-                    <label for="node-input-dayEndTimeToWeekend" class="binsoul-roller-shutter-sublabel">
-                        <span data-i18n="binsoul-roller-shutter.label.dayEndTimeToWeekend"></span>
+                <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.nightStartTimeWeekend">
+                    <input type="text" id="node-input-nightStartTimeWeekend" class="binsoul-roller-shutter-input" />
+                    <label for="node-input-nightStartTimeWeekend" class="binsoul-roller-shutter-sublabel">
+                        <span data-i18n="binsoul-roller-shutter.label.weekend"></span>
                     </label>
                 </div>
             </div>
@@ -191,17 +288,17 @@
 
         <h3><span data-i18n="binsoul-roller-shutter.group.shading"></span></h3>
         <div>
-            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionShadingOpen">
-                <label for="node-input-positionShadingOpen" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.positionShadingOpen"></span>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.shadingPositionOpen">
+                <label for="node-input-shadingPositionOpen" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.shadingPositionOpen"></span>
                 </label>
-                <input type="number" min="0" id="node-input-positionShadingOpen" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" id="node-input-shadingPositionOpen" class="binsoul-roller-shutter-input" />
             </div>
-            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.positionShadingClosed">
-                <label for="node-input-positionShadingClosed" class="binsoul-roller-shutter-label">
-                    <span data-i18n="binsoul-roller-shutter.label.positionShadingClosed"></span>
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.shadingPositionClosed">
+                <label for="node-input-shadingPositionClosed" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.shadingPositionClosed"></span>
                 </label>
-                <input type="number" min="0" id="node-input-positionShadingClosed" class="binsoul-roller-shutter-input" />
+                <input type="number" min="0" id="node-input-shadingPositionClosed" class="binsoul-roller-shutter-input" />
             </div>
 
             <label class="binsoul-roller-shutter-label">

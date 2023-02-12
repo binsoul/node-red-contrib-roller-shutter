@@ -62,29 +62,41 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
     const controllerValueOpen = getNumber(config.controllerValueOpen, 100);
     const controllerValueClosed = getNumber(config.controllerValueClosed, 0);
     const controllerValueStep = getNumber(config.controllerValueStep, 1);
-    const positionDayOpen = getNumber(config.positionDayOpen, 100);
-    const positionNightOpen = getNumber(config.positionNightOpen, 100);
-    const positionNightClosed = getNumber(config.positionNightClosed, 0);
-    const positionNightTilted = getNumber(config.positionNightTilted, 50);
-    const positionDayClosed = getNumber(config.positionDayClosed, 0);
-    const positionShadingOpen = getNumber(config.positionShadingOpen, 100);
-    const positionShadingClosed = getNumber(config.positionShadingClosed, 25);
+    const morningPositionOpen = getNumber(config.morningPositionOpen, 100);
+    const morningPositionClosed = getNumber(config.morningPositionClosed, 0);
+    const dayPositionOpen = getNumber(config.dayPositionOpen, 100);
+    const dayPositionClosed = getNumber(config.dayPositionClosed, 0);
+    const eveningPositionOpen = getNumber(config.eveningPositionOpen, 100);
+    const eveningPositionClosed = getNumber(config.eveningPositionClosed, 0);
+    const nightPositionOpen = getNumber(config.nightPositionOpen, 100);
+    const nightPositionClosed = getNumber(config.nightPositionClosed, 0);
+    const nightPositionTilted = getNumber(config.nightPositionTilted, 50);
+    const shadingPositionOpen = getNumber(config.shadingPositionOpen, 100);
+    const shadingPositionClosed = getNumber(config.shadingPositionClosed, 25);
+    const morningTemperatureMin = getNumber(config.morningTemperatureMin, null);
+    const morningTemperatureDesired = getNumber(config.morningTemperatureDesired, null);
+    const morningTemperatureMax = getNumber(config.morningTemperatureMax, null);
     const dayTemperatureMin = getNumber(config.dayTemperatureMin, null);
     const dayTemperatureDesired = getNumber(config.dayTemperatureDesired, null);
     const dayTemperatureMax = getNumber(config.dayTemperatureMax, null);
+    const eveningTemperatureMin = getNumber(config.eveningTemperatureMin, null);
+    const eveningTemperatureDesired = getNumber(config.eveningTemperatureDesired, null);
+    const eveningTemperatureMax = getNumber(config.eveningTemperatureMax, null);
     const nightTemperatureMin = getNumber(config.nightTemperatureMin, null);
     const nightTemperatureDesired = getNumber(config.nightTemperatureDesired, null);
     const nightTemperatureMax = getNumber(config.nightTemperatureMax, null);
-    const dayStartIlluminance = getNumber(config.dayStartIlluminance, 25);
-    const dayStartTimeFromWorkday = getString(config.dayStartTimeFromWorkday, null);
-    const dayStartTimeFromWeekend = getString(config.dayStartTimeFromWeekend, null);
-    const dayStartTimeToWorkday = getString(config.dayStartTimeToWorkday, null);
-    const dayStartTimeToWeekend = getString(config.dayStartTimeToWeekend, null);
-    const dayEndIlluminance = getNumber(config.dayEndIlluminance, 25);
-    const dayEndTimeFromWorkday = getString(config.dayEndTimeFromWorkday, null);
-    const dayEndTimeFromWeekend = getString(config.dayEndTimeFromWeekend, null);
-    const dayEndTimeToWorkday = getString(config.dayEndTimeToWorkday, null);
-    const dayEndTimeToWeekend = getString(config.dayEndTimeToWeekend, null);
+    const morningStartIlluminance = getNumber(config.morningStartIlluminance, 25);
+    const dayStartIlluminance = getNumber(config.dayStartIlluminance, 50);
+    const nightStopTimeWorkday = getString(config.nightStopTimeWorkday, null);
+    const nightStopTimeWeekend = getString(config.nightStopTimeWeekend, null);
+    const dayStartTimeWorkday = getString(config.dayStartTimeWorkday, null);
+    const dayStartTimeWeekend = getString(config.dayStartTimeWeekend, null);
+    const eveningStartIlluminance = getNumber(config.eveningStartIlluminance, 50);
+    const nightStartIlluminance = getNumber(config.nightStartIlluminance, 25);
+    const dayStopTimeWorkday = getString(config.dayStopTimeWorkday, null);
+    const dayStopTimeWeekend = getString(config.dayStopTimeWeekend, null);
+    const nightStartTimeWorkday = getString(config.nightStartTimeWorkday, null);
+    const nightStartTimeWeekend = getString(config.nightStartTimeWeekend, null);
     const shadingStartIlluminance = getNumber(config.shadingStartIlluminance, null);
     const shadingStartAzimuth = getNumber(config.shadingStartAzimuth, null);
     const shadingStartAltitude = getNumber(config.shadingStartAltitude, null);
@@ -119,29 +131,41 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
         controllerValueOpen,
         controllerValueClosed,
         controllerValueStep,
-        positionDayOpen,
-        positionDayClosed,
-        positionNightOpen,
-        positionNightClosed,
-        positionNightTilted,
-        positionShadingOpen,
-        positionShadingClosed,
+        morningPositionOpen,
+        morningPositionClosed,
+        dayPositionOpen,
+        dayPositionClosed,
+        eveningPositionOpen,
+        eveningPositionClosed,
+        nightPositionOpen,
+        nightPositionClosed,
+        nightPositionTilted,
+        shadingPositionOpen,
+        shadingPositionClosed,
+        morningTemperatureMin,
+        morningTemperatureDesired,
+        morningTemperatureMax,
         dayTemperatureMin,
         dayTemperatureDesired,
         dayTemperatureMax,
+        eveningTemperatureMin,
+        eveningTemperatureDesired,
+        eveningTemperatureMax,
         nightTemperatureMin,
         nightTemperatureDesired,
         nightTemperatureMax,
+        morningStartIlluminance,
         dayStartIlluminance,
-        dayStartTimeFromWorkday,
-        dayStartTimeFromWeekend,
-        dayStartTimeToWorkday,
-        dayStartTimeToWeekend,
-        dayEndIlluminance,
-        dayEndTimeFromWorkday,
-        dayEndTimeFromWeekend,
-        dayEndTimeToWorkday,
-        dayEndTimeToWeekend,
+        nightStopTimeWorkday,
+        nightStopTimeWeekend,
+        dayStartTimeWorkday,
+        dayStartTimeWeekend,
+        eveningStartIlluminance,
+        nightStartIlluminance,
+        dayStopTimeWorkday,
+        dayStopTimeWeekend,
+        nightStartTimeWorkday,
+        nightStartTimeWeekend,
         shadingStartIlluminance,
         shadingStartAzimuth,
         shadingStartAltitude,

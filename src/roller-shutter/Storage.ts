@@ -1,5 +1,13 @@
 import { Configuration } from './Configuration';
 
+interface ModeConfiguration {
+    positionOpen: number | null;
+    positionClosed: number | null;
+    temperatureMin: number | null;
+    temperatureDesired: number | null;
+    temperatureMax: number | null;
+}
+
 function parseTime(time: string, timestamp: Date): Date | null {
     let hour, minute;
     const pm = time.match(/p/i) !== null;
@@ -223,49 +231,67 @@ export class Storage {
             timestamp = this.fixedTime;
         }
 
-        const dayStartFrom = selectTime(new Date(timestamp), this.configuration.dayStartTimeFromWorkday, this.configuration.dayStartTimeFromWeekend);
-        const dayStartTo = selectTime(new Date(timestamp), this.configuration.dayStartTimeToWorkday, this.configuration.dayStartTimeToWeekend);
-        const dayEndFrom = selectTime(new Date(timestamp), this.configuration.dayEndTimeFromWorkday, this.configuration.dayEndTimeFromWeekend);
-        const dayEndTo = selectTime(new Date(timestamp), this.configuration.dayEndTimeToWorkday, this.configuration.dayEndTimeToWeekend);
+        const dayStartTime = selectTime(new Date(timestamp), this.configuration.dayStartTimeWorkday, this.configuration.dayStartTimeWeekend);
+        const dayStopTime = selectTime(new Date(timestamp), this.configuration.dayStopTimeWorkday, this.configuration.dayStopTimeWeekend);
+        const nightStartTime = selectTime(new Date(timestamp), this.configuration.nightStartTimeWorkday, this.configuration.nightStartTimeWeekend);
+        const nightStopTime = selectTime(new Date(timestamp), this.configuration.nightStopTimeWorkday, this.configuration.nightStopTimeWeekend);
 
         let mode = this.mode;
         let reason = '';
 
         let isFixedRange = false;
-        if (dayStartFrom !== null && timestamp < dayStartFrom) {
-            mode = 'night';
-            reason = 'time < ' + formatTime(dayStartFrom);
-            isFixedRange = true;
-        } else if (dayEndTo !== null && timestamp >= dayEndTo) {
-            mode = 'night';
-            reason = 'time > ' + formatTime(dayEndTo);
-            isFixedRange = true;
-        } else if (dayStartTo !== null && timestamp >= dayStartTo && dayEndFrom !== null && timestamp < dayEndFrom) {
-            mode = 'day';
-            reason = formatTime(dayStartTo) + ' < time < ' + formatTime(dayEndFrom);
-            isFixedRange = true;
+        const isMorning = new Date(timestamp).getHours() < 12;
+
+        if (isMorning) {
+            if (nightStopTime !== null && timestamp < nightStopTime) {
+                mode = 'night';
+                reason = 'time < ' + formatTime(nightStopTime);
+                isFixedRange = true;
+            } else if (dayStartTime !== null && timestamp >= dayStartTime) {
+                mode = 'day';
+                reason = 'time ≥ ' + formatTime(dayStartTime);
+                isFixedRange = true;
+            } else if (nightStopTime !== null && timestamp >= nightStopTime) {
+                mode = 'morning';
+                reason = 'time ≥ ' + formatTime(nightStopTime);
+            }
+        } else {
+            if (nightStartTime !== null && timestamp >= nightStartTime) {
+                mode = 'night';
+                reason = 'time ≥ ' + formatTime(nightStartTime);
+                isFixedRange = true;
+            } else if (dayStopTime !== null && timestamp < dayStopTime) {
+                mode = 'day';
+                reason = 'time < ' + formatTime(dayStopTime);
+                isFixedRange = true;
+            } else if (nightStartTime !== null && timestamp < nightStartTime) {
+                mode = 'evening';
+                reason = 'time < ' + formatTime(nightStartTime);
+            }
         }
 
         if (!isFixedRange && this.outsideIlluminance !== null) {
-            if (this.outsideIlluminance >= this.configuration.dayStartIlluminance && (dayStartFrom === null || timestamp >= dayStartFrom)) {
-                mode = 'day';
-                reason = 'illuminance > ' + this.configuration.dayStartIlluminance;
-            } else if (this.outsideIlluminance <= this.configuration.dayEndIlluminance && (dayEndFrom === null || timestamp >= dayEndFrom)) {
-                mode = 'night';
-                reason = 'illuminance < ' + this.configuration.dayEndIlluminance;
-            } else if (this.outsideIlluminance <= this.configuration.dayStartIlluminance && (dayStartTo === null || timestamp < dayStartTo)) {
-                mode = 'night';
-                reason = 'illuminance < ' + this.configuration.dayStartIlluminance;
-            } else if (this.outsideIlluminance >= this.configuration.dayEndIlluminance && (dayEndTo === null || timestamp < dayEndTo)) {
-                mode = 'day';
-                reason = 'illuminance > ' + this.configuration.dayEndIlluminance;
-            } else if (this.mode === '') {
-                if (this.outsideIlluminance >= this.configuration.dayStartIlluminance) {
-                    mode = 'day';
-                    reason = 'illuminance > ' + this.configuration.dayStartIlluminance;
-                } else {
+            if (isMorning) {
+                if (this.outsideIlluminance < this.configuration.morningStartIlluminance) {
                     mode = 'night';
+                    reason = 'illuminance < ' + this.configuration.morningStartIlluminance;
+                } else if (this.outsideIlluminance < this.configuration.dayStartIlluminance) {
+                    mode = 'morning';
                     reason = 'illuminance < ' + this.configuration.dayStartIlluminance;
+                } else {
+                    mode = 'day';
+                    reason = 'illuminance ≥ ' + this.configuration.dayStartIlluminance;
+                }
+            } else {
+                if (this.outsideIlluminance <= this.configuration.nightStartIlluminance) {
+                    mode = 'night';
+                    reason = 'illuminance ≤ ' + this.configuration.nightStartIlluminance;
+                } else if (this.outsideIlluminance <= this.configuration.eveningStartIlluminance) {
+                    mode = 'evening';
+                    reason = 'illuminance ≤ ' + this.configuration.eveningStartIlluminance;
+                } else {
+                    mode = 'day';
+                    reason = 'illuminance ≥ ' + this.configuration.dayStartIlluminance;
                 }
             }
         }
@@ -276,7 +302,7 @@ export class Storage {
         let position = null;
         if (this.mode === 'day') {
             position = this.handleDay();
-        } else if (this.mode === 'night') {
+        } else if (this.mode === 'night' || this.mode === 'morning' || this.mode === 'evening') {
             position = this.handleNight(modeChanged);
         }
 
@@ -314,7 +340,7 @@ export class Storage {
 
     private handleDay(): number {
         this.specialReason = '';
-        let position = this.configuration.positionDayOpen;
+        let position = this.configuration.dayPositionOpen;
 
         const startIlluminance = this.configuration.shadingStartIlluminance || this.configuration.shadingEndIlluminance;
         const endIlluminance = this.configuration.shadingEndIlluminance || this.configuration.shadingStartIlluminance;
@@ -415,24 +441,26 @@ export class Storage {
                 }
             }
 
-            position = this.configuration.positionShadingClosed;
+            position = this.configuration.shadingPositionClosed;
         } else {
             this.setSpecial('', notReason);
-            position = this.configuration.positionDayOpen;
+            position = this.configuration.dayPositionOpen;
         }
 
         return position;
     }
 
     private handleNight(modeChanged: boolean): number | null {
-        if (!modeChanged && !this.configuration.allowNightChange) {
+        if (!modeChanged && !this.configuration.allowNightChange && this.mode === 'night') {
             this.special = 'silence';
 
             return this.position;
         }
 
+        const configuration = this.getConfiguration(this.mode);
+
         this.specialReason = '';
-        let position = this.configuration.positionNightClosed;
+        let position = configuration.positionClosed;
 
         let special = '';
         let reason = '';
@@ -442,12 +470,12 @@ export class Storage {
         if (this.window !== null) {
             if (this.window === 'open') {
                 isWindowOpenOrTilted = true;
-                position = this.configuration.positionNightOpen;
+                position = configuration.positionOpen;
                 reason = 'window open';
                 special = 'window';
             } else if (this.window === 'tilted') {
                 isWindowOpenOrTilted = true;
-                position = this.configuration.positionNightTilted;
+                position = this.configuration.nightPositionTilted;
                 reason = 'window tilted';
                 special = 'window';
             } else {
@@ -457,16 +485,16 @@ export class Storage {
 
         let isTemperature = false;
         if (this.insideTemperature !== null && isWindowOpenOrTilted) {
-            if (this.configuration.nightTemperatureMax !== null && this.insideTemperature > this.configuration.nightTemperatureMax) {
+            if (configuration.temperatureMax !== null && this.insideTemperature > configuration.temperatureMax) {
                 isTemperature = true;
-                position = this.configuration.positionNightOpen;
+                position = configuration.positionOpen;
                 special = 'cool';
-                reason = 'temperature > ' + this.configuration.nightTemperatureMax;
-            } else if (this.configuration.nightTemperatureDesired !== null && this.insideTemperature > this.configuration.nightTemperatureDesired) {
+                reason = 'temperature > ' + configuration.temperatureMax;
+            } else if (configuration.temperatureDesired !== null && this.insideTemperature > configuration.temperatureDesired) {
                 isTemperature = true;
-                position = this.configuration.positionNightOpen;
+                position = configuration.positionOpen;
                 special = 'cool';
-                reason = 'temperature > ' + this.configuration.nightTemperatureDesired;
+                reason = 'temperature > ' + configuration.temperatureDesired;
             }
         }
 
@@ -477,7 +505,43 @@ export class Storage {
         } else {
             this.setSpecial('', notReason);
 
-            return this.configuration.positionNightClosed;
+            return configuration.positionClosed;
         }
+    }
+
+    private getConfiguration(mode: string): ModeConfiguration {
+        if (mode === 'morning') {
+            return {
+                positionOpen: this.configuration.morningPositionOpen,
+                positionClosed: this.configuration.morningPositionClosed,
+                temperatureMin: this.configuration.morningTemperatureMin,
+                temperatureDesired: this.configuration.morningTemperatureDesired,
+                temperatureMax: this.configuration.morningTemperatureMax,
+            };
+        } else if (mode === 'evening') {
+            return {
+                positionOpen: this.configuration.eveningPositionOpen,
+                positionClosed: this.configuration.eveningPositionClosed,
+                temperatureMin: this.configuration.eveningTemperatureMin,
+                temperatureDesired: this.configuration.eveningTemperatureDesired,
+                temperatureMax: this.configuration.eveningTemperatureMax,
+            };
+        } else if (mode === 'night') {
+            return {
+                positionOpen: this.configuration.nightPositionOpen,
+                positionClosed: this.configuration.nightPositionClosed,
+                temperatureMin: this.configuration.nightTemperatureMin,
+                temperatureDesired: this.configuration.nightTemperatureDesired,
+                temperatureMax: this.configuration.nightTemperatureMax,
+            };
+        }
+
+        return {
+            positionOpen: this.configuration.dayPositionOpen,
+            positionClosed: this.configuration.dayPositionClosed,
+            temperatureMin: this.configuration.dayTemperatureMin,
+            temperatureDesired: this.configuration.dayTemperatureDesired,
+            temperatureMax: this.configuration.dayTemperatureMax,
+        };
     }
 }
