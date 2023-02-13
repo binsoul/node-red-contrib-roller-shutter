@@ -80,6 +80,13 @@ function selectTime(timestamp: Date, workdayTime: string | null, weekendTime: st
 }
 
 /**
+ * Determines if the given dates are on the same day.
+ */
+function isSameDay(date1: Date, date2: Date): boolean {
+    return date1.getUTCDate() === date2.getUTCDate() && date1.getUTCMonth() === date2.getUTCMonth() && date1.getUTCFullYear() === date2.getUTCFullYear();
+}
+
+/**
  * Outputs a formated time string.
  */
 function formatTime(timestamp: number) {
@@ -102,6 +109,7 @@ export class Storage {
     private configuration: Configuration;
 
     private mode = '';
+    private modeStartedAt: Date | null = null;
     private modeReason = '';
     private special = '';
     private specialReason = '';
@@ -211,6 +219,14 @@ export class Storage {
     }
 
     setMode(mode: string, reason: string): void {
+        if (mode !== this.mode) {
+            if (this.fixedTime !== null) {
+                this.modeStartedAt = new Date(this.fixedTime);
+            } else {
+                this.modeStartedAt = new Date();
+            }
+        }
+
         this.mode = mode;
         this.modeReason = reason;
     }
@@ -245,16 +261,17 @@ export class Storage {
             timestamp = this.fixedTime;
         }
 
-        const dayStartTime = selectTime(new Date(timestamp), this.configuration.dayStartTimeWorkday, this.configuration.dayStartTimeWeekend);
-        const dayStopTime = selectTime(new Date(timestamp), this.configuration.dayStopTimeWorkday, this.configuration.dayStopTimeWeekend);
-        const nightStartTime = selectTime(new Date(timestamp), this.configuration.nightStartTimeWorkday, this.configuration.nightStartTimeWeekend);
-        const nightStopTime = selectTime(new Date(timestamp), this.configuration.nightStopTimeWorkday, this.configuration.nightStopTimeWeekend);
+        const dateTime = new Date(timestamp);
+        const dayStartTime = selectTime(dateTime, this.configuration.dayStartTimeWorkday, this.configuration.dayStartTimeWeekend);
+        const dayStopTime = selectTime(dateTime, this.configuration.dayStopTimeWorkday, this.configuration.dayStopTimeWeekend);
+        const nightStartTime = selectTime(dateTime, this.configuration.nightStartTimeWorkday, this.configuration.nightStartTimeWeekend);
+        const nightStopTime = selectTime(dateTime, this.configuration.nightStopTimeWorkday, this.configuration.nightStopTimeWeekend);
 
         let mode = this.mode;
         let reason = '';
 
         let isFixedRange = false;
-        const isMorning = new Date(timestamp).getHours() < 12;
+        const isMorning = dateTime.getHours() < 12;
 
         if (isMorning) {
             if (nightStopTime !== null && timestamp < nightStopTime) {
@@ -310,7 +327,31 @@ export class Storage {
             }
         }
 
-        const modeChanged = mode !== this.mode;
+        let modeChanged = mode !== this.mode;
+        if (modeChanged && this.modeStartedAt !== null && isSameDay(dateTime, this.modeStartedAt)) {
+            if (this.mode === 'morning' && (mode === 'evening' || mode === 'night')) {
+                mode = 'morning';
+                reason = 'started at ' + formatTime(this.modeStartedAt.getTime());
+            }
+
+            if (this.mode === 'day' && (mode === 'morning' || (isMorning && (mode === 'evening' || mode === 'night')))) {
+                mode = 'day';
+                reason = 'started at ' + formatTime(this.modeStartedAt.getTime());
+            }
+
+            if (this.mode === 'evening' && (mode === 'morning' || mode === 'day')) {
+                mode = 'evening';
+                reason = 'started at ' + formatTime(this.modeStartedAt.getTime());
+            }
+
+            if (this.mode === 'night' && (mode === 'evening' || (!isMorning && (mode === 'morning' || mode === 'day')))) {
+                mode = 'night';
+                reason = 'started at ' + formatTime(this.modeStartedAt.getTime());
+            }
+
+            modeChanged = mode !== this.mode;
+        }
+
         this.setMode(mode, reason);
 
         let position = null;
