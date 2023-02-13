@@ -6,7 +6,7 @@ export class UpdateAction implements Action {
     private readonly configuration: Configuration;
     private readonly storage: Storage;
     private readonly ignoreTimestamp: boolean;
-    private scheduleOutputCallback: null | ((delay: number, output: number) => void);
+    private readonly scheduleOutputCallback: null | ((delay: number, output: number) => void);
 
     constructor(configuration: Configuration, storage: Storage, ignoreTimestamp: boolean, scheduleOutputCallback: null | ((delay: number, output: number) => void)) {
         this.configuration = configuration;
