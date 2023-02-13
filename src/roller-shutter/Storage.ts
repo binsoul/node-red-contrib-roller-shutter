@@ -321,18 +321,22 @@ export class Storage {
         }
 
         if (modeChanged) {
+            // reset manual position if mode changes
             this.manualPosition = null;
         }
 
         if (position === this.manualPosition) {
+            // reset manual position if it was changed to the automatic position
             this.manualPosition = null;
         }
 
         if (this.manualPosition !== null) {
-            this.setMode(mode, '');
+            this.setMode('manual', '');
             this.setSpecial('', '');
 
-            position = this.manualPosition;
+            this.position = this.manualPosition;
+
+            return null;
         }
 
         if (position === null || position === this.position) {
@@ -507,11 +511,6 @@ export class Storage {
                 position = configuration.positionOpen;
                 special = 'cool';
                 reason = 'temperature > ' + configuration.temperatureMax;
-            } else if (configuration.temperatureDesired !== null && this.insideTemperature > configuration.temperatureDesired) {
-                isTemperature = true;
-                position = configuration.positionOpen;
-                special = 'cool';
-                reason = 'temperature > ' + configuration.temperatureDesired;
             }
         }
 
