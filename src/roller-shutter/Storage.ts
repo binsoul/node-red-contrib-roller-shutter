@@ -112,6 +112,7 @@ export class Storage {
     private modeStartedAt: Date | null = null;
     private modeReason = '';
     private special = '';
+    private specialStartedAt: Date | null = null;
     private specialReason = '';
     private fixedTime: number | null = null;
     private position: number | null = null;
@@ -236,6 +237,16 @@ export class Storage {
     }
 
     setSpecial(special: string, reason: string): void {
+        if (special === '') {
+            this.specialStartedAt = null;
+        } else if (special !== this.special) {
+            if (this.fixedTime !== null) {
+                this.specialStartedAt = new Date(this.fixedTime);
+            } else {
+                this.specialStartedAt = new Date();
+            }
+        }
+
         this.special = special;
         this.specialReason = reason;
     }
@@ -547,11 +558,28 @@ export class Storage {
 
         let isTemperature = false;
         if (this.insideTemperature !== null && !isSilence) {
-            if (configuration.temperatureMax !== null && this.insideTemperature > configuration.temperatureMax) {
-                isTemperature = true;
-                position = configuration.positionOpen;
-                special = 'cool';
-                reason = 'temperature > ' + configuration.temperatureMax;
+            if (this.special === 'cool') {
+                if (configuration.temperatureDesired !== null) {
+                    if (this.insideTemperature < configuration.temperatureDesired) {
+                        notReason = 'inside temp < ' + configuration.temperatureDesired;
+                    } else {
+                        isTemperature = true;
+                        position = configuration.positionOpen;
+                        special = 'cool';
+                        reason = 'inside temp > ' + configuration.temperatureDesired;
+                    }
+                } else if (configuration.temperatureMax !== null) {
+                    if (this.insideTemperature < configuration.temperatureMax) {
+                        notReason = 'inside temp < ' + configuration.temperatureMax;
+                    }
+                }
+            } else {
+                if (configuration.temperatureMax !== null && this.insideTemperature > configuration.temperatureMax && (this.outsideTemperature === null || this.outsideTemperature < configuration.temperatureMax)) {
+                    isTemperature = true;
+                    position = configuration.positionOpen;
+                    special = 'cool';
+                    reason = 'inside temp > ' + configuration.temperatureMax;
+                }
             }
         }
 
