@@ -2,6 +2,7 @@ import { Action, ActionFactory as ActionFactoryInterface } from '@binsoul/node-r
 import { Message } from '@binsoul/node-red-bundle-processing/dist/Message';
 import type { Node, NodeAPI } from '@node-red/registry';
 import { NodeMessageInFlow } from 'node-red';
+import { ClearAction } from './Action/ClearAction';
 import { OutputAction } from './Action/OutputAction';
 import { SensorAction } from './Action/SensorAction';
 import { SetFixedTimeAction } from './Action/SetFixedTimeAction';
@@ -54,6 +55,8 @@ export class ActionFactory implements ActionFactoryInterface {
                     return new OutputAction(this.configuration, this.storage, this.timerHandler);
                 case 'unpause':
                     return [new UnpauseAction(this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
+                case 'clear':
+                    return [new ClearAction(this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
             }
 
             return null;

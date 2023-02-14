@@ -476,6 +476,28 @@ export class Storage {
         return result;
     }
 
+    clear(): void {
+        this.mode = '';
+        this.modeStartedAt = null;
+        this.modeReason = '';
+        this.special = '';
+        this.specialStartedAt = null;
+        this.specialReason = '';
+        this.fixedTime = null;
+        this.position = null;
+        this.paused = false;
+        this.eventQueue = [];
+
+        this.outsideIlluminance = null;
+        this.outsideTemperature = null;
+        this.insideTemperature = null;
+        this.window = null;
+        this.windowChanged = false;
+        this.sunAzimuth = null;
+        this.sunAltitude = null;
+        this.manualPosition = null;
+    }
+
     private setMode(mode: string, reason: string): void {
         if (mode !== this.mode) {
             if (this.fixedTime !== null) {

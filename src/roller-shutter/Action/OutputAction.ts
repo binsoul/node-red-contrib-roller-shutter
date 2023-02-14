@@ -5,8 +5,8 @@ import { TimerHandler } from '../TimerHandler';
 
 export class OutputAction implements Action {
     private readonly configuration: Configuration;
-    private storage: Storage;
-    private timerHandler: TimerHandler;
+    private readonly storage: Storage;
+    private readonly timerHandler: TimerHandler;
 
     constructor(configuration: Configuration, storage: Storage, timerHandler: TimerHandler) {
         this.configuration = configuration;
