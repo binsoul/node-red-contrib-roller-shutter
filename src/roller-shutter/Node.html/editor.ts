@@ -81,6 +81,14 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             value: 'position',
             required: false,
         },
+        inputWeekendProperty: {
+            value: 'payload',
+            required: false,
+        },
+        inputWeekendTopic: {
+            value: 'weekend',
+            required: false,
+        },
         outputValueProperty: {
             value: 'payload',
             required: true,
@@ -393,6 +401,12 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
 
         $('#node-input-inputPositionProperty').typedInput({
             typeField: '#node-input-inputPositionSource',
+            types: ['msg', 'flow', 'global'],
+            default: 'msg',
+        });
+
+        $('#node-input-inputWeekendProperty').typedInput({
+            typeField: '#node-input-inputWeekendSource',
             types: ['msg', 'flow', 'global'],
             default: 'msg',
         });

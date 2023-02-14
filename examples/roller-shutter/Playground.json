@@ -74,6 +74,8 @@
         "inputSunAltitudeTopic": "sunAltitude",
         "inputPositionProperty": "payload",
         "inputPositionTopic": "position",
+        "inputWeekendProperty": "payload",
+        "inputWeekendTopic": "weekend",
         "outputValueProperty": "payload",
         "outputValueTarget": "msg",
         "outputPositionOpen": "100",
@@ -100,7 +102,7 @@
         "nightStartIlluminance": "25",
         "nightStopTimeWorkday": "06:00",
         "nightStopTimeWeekend": "",
-        "dayStartTimeWorkday": "10:00",
+        "dayStartTimeWorkday": "",
         "dayStartTimeWeekend": "",
         "dayStopTimeWorkday": "18:00",
         "dayStopTimeWeekend": "",
@@ -605,7 +607,8 @@
             "87788ca74ecb1e3f",
             "b5cb921066b914d4",
             "486ba8bc04695630",
-            "638cc737e2ded781"
+            "638cc737e2ded781",
+            "dc74fbbc1c30d8c5"
         ],
         "x": 95,
         "y": 60,
@@ -1358,7 +1361,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 240,
-        "y": 600,
+        "y": 700,
         "wires": [
             [
                 "638cc737e2ded781"
@@ -1375,7 +1378,78 @@
             "bf999adc7009d3b9"
         ],
         "x": 375,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "00dbf57038b7f46b",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set weekend",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "weekend",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 210,
         "y": 600,
+        "wires": [
+            [
+                "dc74fbbc1c30d8c5"
+            ]
+        ]
+    },
+    {
+        "id": "97d879458536b002",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set workday",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "weekend",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 210,
+        "y": 640,
+        "wires": [
+            [
+                "dc74fbbc1c30d8c5"
+            ]
+        ]
+    },
+    {
+        "id": "dc74fbbc1c30d8c5",
+        "type": "link out",
+        "z": "75b1632e8be4d5e1",
+        "name": "link out 10",
+        "mode": "link",
+        "links": [
+            "bf999adc7009d3b9"
+        ],
+        "x": 375,
+        "y": 620,
         "wires": []
     }
 ]

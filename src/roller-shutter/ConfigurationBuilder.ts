@@ -56,6 +56,9 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
     const inputPositionProperty = getString(config.inputPositionProperty, 'payload');
     const inputPositionSource = getString(config.inputPositionSource, 'msg');
     const inputPositionTopic = getString(config.inputPositionTopic, 'position');
+    const inputWeekendProperty = getString(config.inputWeekendProperty, 'payload');
+    const inputWeekendSource = getString(config.inputWeekendSource, 'msg');
+    const inputWeekendTopic = getString(config.inputWeekendTopic, 'weekend');
     const outputValueProperty = getString(config.inputOutsideIlluminanceProperty, 'payload');
     const outputValueTarget = getString(config.inputOutsideIlluminanceSource, 'msg');
     const outputPositionOpen = getNumber(config.outputPositionOpen, 100);
@@ -129,6 +132,9 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
         inputPositionSource,
         inputPositionProperty,
         inputPositionTopic.toLowerCase(),
+        inputWeekendSource,
+        inputWeekendProperty,
+        inputWeekendTopic.toLowerCase(),
         outputValueProperty,
         outputValueTarget,
         outputPositionOpen,

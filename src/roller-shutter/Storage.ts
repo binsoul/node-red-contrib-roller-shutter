@@ -64,9 +64,12 @@ function parseTime(time: string, timestamp: Date): Date | null {
 /**
  * Returns either the time for workdays or the time for weekends depending on the day of the week.
  */
-function selectTime(timestamp: Date, workdayTime: string | null, weekendTime: string | null): number | null {
+function selectTime(timestamp: Date, workdayTime: string | null, weekendTime: string | null, weekend: boolean | null): number | null {
     const dayOfWeek = timestamp.getDay();
-    const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
+    let isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
+    if (weekend !== null) {
+        isWeekend = weekend;
+    }
 
     if (!isWeekend) {
         if (workdayTime === null) {
@@ -134,6 +137,7 @@ export class Storage {
     private sunAzimuth: number | null = null;
     private sunAltitude: number | null = null;
     private manualPosition: number | null = null;
+    private weekend: boolean | null = null;
 
     constructor(configuration: Configuration) {
         this.configuration = configuration;
@@ -261,6 +265,14 @@ export class Storage {
         }
     }
 
+    getWeekend(): boolean | null {
+        return this.weekend;
+    }
+
+    setWeekend(value: boolean | null): void {
+        this.weekend = value;
+    }
+
     setFixedTime(time: number): void {
         this.fixedTime = time;
     }
@@ -344,10 +356,10 @@ export class Storage {
         }
 
         const dateTime = new Date(timestamp);
-        const dayStartTime = selectTime(dateTime, this.configuration.dayStartTimeWorkday, this.configuration.dayStartTimeWeekend);
-        const dayStopTime = selectTime(dateTime, this.configuration.dayStopTimeWorkday, this.configuration.dayStopTimeWeekend);
-        const nightStartTime = selectTime(dateTime, this.configuration.nightStartTimeWorkday, this.configuration.nightStartTimeWeekend);
-        const nightStopTime = selectTime(dateTime, this.configuration.nightStopTimeWorkday, this.configuration.nightStopTimeWeekend);
+        const dayStartTime = selectTime(dateTime, this.configuration.dayStartTimeWorkday, this.configuration.dayStartTimeWeekend, this.weekend);
+        const dayStopTime = selectTime(dateTime, this.configuration.dayStopTimeWorkday, this.configuration.dayStopTimeWeekend, this.weekend);
+        const nightStartTime = selectTime(dateTime, this.configuration.nightStartTimeWorkday, this.configuration.nightStartTimeWeekend, this.weekend);
+        const nightStopTime = selectTime(dateTime, this.configuration.nightStopTimeWorkday, this.configuration.nightStopTimeWeekend, this.weekend);
 
         let mode = this.mode;
         let reason = '';

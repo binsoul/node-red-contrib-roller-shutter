@@ -63,6 +63,13 @@ export class SensorAction implements Action {
             required: false,
         });
 
+        result.set('payloadWeekend', {
+            source: this.configuration.inputWeekendSource,
+            property: this.configuration.inputWeekendProperty,
+            type: 'boolean',
+            required: false,
+        });
+
         return result;
     }
 
@@ -99,6 +106,10 @@ export class SensorAction implements Action {
 
         if (topic === this.configuration.inputPositionTopic) {
             this.storage.setManualPosition(input.getRequiredValue<number>('payloadPosition'));
+        }
+
+        if (topic === this.configuration.inputWeekendTopic) {
+            this.storage.setWeekend(input.getRequiredValue<boolean>('payloadWeekend'));
         }
 
         return new Output();

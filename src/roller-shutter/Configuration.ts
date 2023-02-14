@@ -25,6 +25,9 @@ export class Configuration {
     inputPositionSource = 'msg';
     inputPositionProperty = 'payload';
     inputPositionTopic = 'position';
+    inputWeekendSource = 'msg';
+    inputWeekendProperty = 'payload';
+    inputWeekendTopic = 'weekend';
 
     outputPositionOpen = 100;
     outputPositionClosed = 0;
@@ -105,6 +108,9 @@ export class Configuration {
         inputPositionSource = 'msg',
         inputPositionProperty = 'payload',
         inputPositionTopic = '',
+        inputWeekendSource = 'msg',
+        inputWeekendProperty = 'payload',
+        inputWeekendTopic = '',
         outputValueProperty = 'payload',
         outputValueTarget = 'msg',
         outputPositionOpen = 100,
@@ -157,6 +163,8 @@ export class Configuration {
         allowNightChange = true,
     ) {
         this.inputOutsideIlluminanceTopic = inputOutsideIlluminanceTopic;
+        this.inputOutsideIlluminanceProperty = inputOutsideIlluminanceProperty;
+        this.inputOutsideIlluminanceSource = inputOutsideIlluminanceSource;
         this.inputOutsideTemperatureSource = inputOutsideTemperatureSource;
         this.inputOutsideTemperatureProperty = inputOutsideTemperatureProperty;
         this.inputOutsideTemperatureTopic = inputOutsideTemperatureTopic;
@@ -175,8 +183,9 @@ export class Configuration {
         this.inputPositionSource = inputPositionSource;
         this.inputPositionProperty = inputPositionProperty;
         this.inputPositionTopic = inputPositionTopic;
-        this.inputOutsideIlluminanceProperty = inputOutsideIlluminanceProperty;
-        this.inputOutsideIlluminanceSource = inputOutsideIlluminanceSource;
+        this.inputWeekendSource = inputWeekendSource;
+        this.inputWeekendProperty = inputWeekendProperty;
+        this.inputWeekendTopic = inputWeekendTopic;
         this.outputValueProperty = outputValueProperty;
         this.outputValueTarget = outputValueTarget;
         this.outputPositionOpen = outputPositionOpen;

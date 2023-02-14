@@ -25,6 +25,9 @@ export interface UserConfigurationOptions {
     inputPositionSource?: string | null;
     inputPositionProperty?: string | null;
     inputPositionTopic?: string | null;
+    inputWeekendSource?: string | null;
+    inputWeekendProperty?: string | null;
+    inputWeekendTopic?: string | null;
 
     outputValueProperty: string;
     outputValueTarget: string;
