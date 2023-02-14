@@ -8,6 +8,13 @@ interface ModeConfiguration {
     temperatureMax: number | null;
 }
 
+interface QueueEntry {
+    numberMethod?: 'setOutsideIlluminance' | 'setOutsideTemperature' | 'setInsideTemperature' | 'setSunAzimuth' | 'setSunAltitude' | 'setManualPosition';
+    numberValue?: number | null;
+    stringMethod?: 'setWindow';
+    stringValue?: string | null;
+}
+
 /**
  * Parses the given time string and return a modified Date object for the given timestamp.
  */
@@ -116,6 +123,8 @@ export class Storage {
     private specialReason = '';
     private fixedTime: number | null = null;
     private position: number | null = null;
+    private paused = false;
+    private eventQueue: Array<QueueEntry> = [];
 
     private outsideIlluminance: number | null = null;
     private outsideTemperature: number | null = null;
@@ -135,7 +144,14 @@ export class Storage {
     }
 
     setOutsideIlluminance(value: number | null) {
-        this.outsideIlluminance = value;
+        if (this.paused) {
+            this.eventQueue.push({
+                numberMethod: 'setOutsideIlluminance',
+                numberValue: value,
+            });
+        } else {
+            this.outsideIlluminance = value;
+        }
     }
 
     getOutsideTemperature(): number | null {
@@ -143,27 +159,48 @@ export class Storage {
     }
 
     setOutsideTemperature(value: number | null) {
-        this.outsideTemperature = value;
+        if (this.paused) {
+            this.eventQueue.push({
+                numberMethod: 'setOutsideTemperature',
+                numberValue: value,
+            });
+        } else {
+            this.outsideTemperature = value;
+        }
     }
 
     getInsideTemperature(): number | null {
         return this.insideTemperature;
     }
 
-    setInsideTemperature(value: number | null) {
-        this.insideTemperature = value;
+    setInsideTemperature(value: number | null): void {
+        if (this.paused) {
+            this.eventQueue.push({
+                numberMethod: 'setInsideTemperature',
+                numberValue: value,
+            });
+        } else {
+            this.insideTemperature = value;
+        }
     }
 
     getWindow(): string | null {
         return this.window;
     }
 
-    setWindow(value: string) {
-        if (value === 'open' || value === 'closed' || value === 'tilted') {
-            this.windowChanged = this.window !== value;
-            this.window = value;
+    setWindow(value: string | null) {
+        if (this.paused) {
+            this.eventQueue.push({
+                stringMethod: 'setWindow',
+                stringValue: value,
+            });
         } else {
-            this.window = null;
+            if (value === 'open' || value === 'closed' || value === 'tilted') {
+                this.windowChanged = this.window !== value;
+                this.window = value;
+            } else {
+                this.window = null;
+            }
         }
     }
 
@@ -172,7 +209,14 @@ export class Storage {
     }
 
     setSunAzimuth(value: number | null) {
-        this.sunAzimuth = value;
+        if (this.paused) {
+            this.eventQueue.push({
+                numberMethod: 'setSunAzimuth',
+                numberValue: value,
+            });
+        } else {
+            this.sunAzimuth = value;
+        }
     }
 
     getSunAltitude(): number | null {
@@ -180,7 +224,14 @@ export class Storage {
     }
 
     setSunAltitude(value: number | null) {
-        this.sunAltitude = value;
+        if (this.paused) {
+            this.eventQueue.push({
+                numberMethod: 'setSunAltitude',
+                numberValue: value,
+            });
+        } else {
+            this.sunAltitude = value;
+        }
     }
 
     getManualPosition(): number | null {
@@ -188,18 +239,25 @@ export class Storage {
     }
 
     setManualPosition(value: number | null) {
-        if (value === null) {
-            this.manualPosition = null;
-            return;
-        }
+        if (this.paused) {
+            this.eventQueue.push({
+                numberMethod: 'setManualPosition',
+                numberValue: value,
+            });
+        } else {
+            if (value === null) {
+                this.manualPosition = null;
+                return;
+            }
 
-        let result = remap(value, this.configuration.outputPositionClosed, this.configuration.outputPositionOpen, 0, 100);
-        result = Math.round(result);
+            let result = remap(value, this.configuration.outputPositionClosed, this.configuration.outputPositionOpen, 0, 100);
+            result = Math.round(result);
 
-        this.manualPosition = result;
+            this.manualPosition = result;
 
-        if (this.manualPosition === this.position) {
-            this.manualPosition = null;
+            if (this.manualPosition === this.position) {
+                this.manualPosition = null;
+            }
         }
     }
 
@@ -219,43 +277,27 @@ export class Storage {
         return this.mode || 'unknown';
     }
 
-    setMode(mode: string, reason: string): void {
-        if (mode !== this.mode) {
-            if (this.fixedTime !== null) {
-                this.modeStartedAt = new Date(this.fixedTime);
-            } else {
-                this.modeStartedAt = new Date();
-            }
+    getSpecial(): string {
+        if (this.manualPosition !== null) {
+            return '';
         }
 
-        this.mode = mode;
-        this.modeReason = reason;
-    }
-
-    getSpecial(): string {
         return this.special;
     }
 
-    setSpecial(special: string, reason: string): void {
-        if (special === '') {
-            this.specialStartedAt = null;
-        } else if (special !== this.special) {
-            if (this.fixedTime !== null) {
-                this.specialStartedAt = new Date(this.fixedTime);
-            } else {
-                this.specialStartedAt = new Date();
-            }
+    getModeReason(): string {
+        if (this.manualPosition !== null) {
+            return '';
         }
 
-        this.special = special;
-        this.specialReason = reason;
-    }
-
-    getModeReason(): string {
         return this.modeReason;
     }
 
     getSpecialReason(): string {
+        if (this.manualPosition !== null) {
+            return '';
+        }
+
         return this.specialReason;
     }
 
@@ -267,7 +309,36 @@ export class Storage {
         return this.position;
     }
 
+    pause(): void {
+        this.paused = true;
+    }
+
+    unpause(): void {
+        this.paused = false;
+    }
+
+    isPaused(): boolean {
+        return this.paused;
+    }
+
     update(timestamp: number): number | null {
+        if (this.paused) {
+            return null;
+        }
+
+        if (this.eventQueue.length > 0) {
+            for (const queueEntry of this.eventQueue) {
+                if (typeof queueEntry.numberMethod !== 'undefined') {
+                    this[queueEntry.numberMethod](queueEntry.numberValue as number | null);
+                }
+                if (typeof queueEntry.stringMethod !== 'undefined') {
+                    this[queueEntry.stringMethod](queueEntry.stringValue as string | null);
+                }
+            }
+
+            this.eventQueue = [];
+        }
+
         if (this.fixedTime !== null) {
             timestamp = this.fixedTime;
         }
@@ -383,9 +454,6 @@ export class Storage {
         }
 
         if (this.manualPosition !== null) {
-            this.setMode('manual', '');
-            this.setSpecial('', '');
-
             this.position = this.manualPosition;
 
             return null;
@@ -406,6 +474,34 @@ export class Storage {
         }
 
         return result;
+    }
+
+    private setMode(mode: string, reason: string): void {
+        if (mode !== this.mode) {
+            if (this.fixedTime !== null) {
+                this.modeStartedAt = new Date(this.fixedTime);
+            } else {
+                this.modeStartedAt = new Date();
+            }
+        }
+
+        this.mode = mode;
+        this.modeReason = reason;
+    }
+
+    private setSpecial(special: string, reason: string): void {
+        if (special === '') {
+            this.specialStartedAt = null;
+        } else if (special !== this.special) {
+            if (this.fixedTime !== null) {
+                this.specialStartedAt = new Date(this.fixedTime);
+            } else {
+                this.specialStartedAt = new Date();
+            }
+        }
+
+        this.special = special;
+        this.specialReason = reason;
     }
 
     private handleDay(): number {

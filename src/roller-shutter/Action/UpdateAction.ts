@@ -1,18 +1,19 @@
 import { Action, Input, InputDefinition, Output, OutputDefinition } from '@binsoul/node-red-bundle-processing';
 import type { Configuration } from '../Configuration';
 import { Storage } from '../Storage';
+import { TimerHandler } from '../TimerHandler';
 
 export class UpdateAction implements Action {
     private readonly configuration: Configuration;
     private readonly storage: Storage;
     private readonly ignoreTimestamp: boolean;
-    private readonly scheduleOutputCallback: null | ((delay: number, output: number) => void);
+    private timerHandler: TimerHandler;
 
-    constructor(configuration: Configuration, storage: Storage, ignoreTimestamp: boolean, scheduleOutputCallback: null | ((delay: number, output: number) => void)) {
+    constructor(configuration: Configuration, storage: Storage, ignoreTimestamp: boolean, timerHandler: TimerHandler) {
         this.configuration = configuration;
         this.storage = storage;
         this.ignoreTimestamp = ignoreTimestamp;
-        this.scheduleOutputCallback = scheduleOutputCallback;
+        this.timerHandler = timerHandler;
     }
 
     defineInput(): InputDefinition {
@@ -44,25 +45,43 @@ export class UpdateAction implements Action {
     execute(input: Input): Output {
         const result = new Output();
 
+        if (this.storage.isPaused()) {
+            return result;
+        }
+
         let timestamp = input.getOptionalValue<number>('timestamp');
         if (typeof timestamp === 'undefined' || this.ignoreTimestamp) {
             timestamp = input.getMessage().timestamp;
         }
 
         const previousMode = this.storage.getMode();
+        const previousPosition = this.storage.getPosition();
+        const previousPositionStatus = this.storage.getPosition() !== null ? this.storage.getPosition() : '?';
 
         const output = this.storage.update(timestamp);
 
+        const position = this.storage.getPosition();
+        const positionStatus = position !== null ? position : '?';
+
         if (output !== null) {
-            if (this.storage.getMode() !== previousMode && this.scheduleOutputCallback !== null && this.configuration.outputDelayMinimum !== null && this.configuration.outputDelayMaximum !== null) {
+            if (this.storage.getMode() !== previousMode && this.configuration.outputDelayMinimum !== null && this.configuration.outputDelayMaximum !== null) {
+                result.setNodeStatus(`[delay⇒${positionStatus}] ${previousMode} ⇒ ${this.storage.getMode()}`);
+
                 const delay = Math.round(this.configuration.outputDelayMinimum + Math.random() * (this.configuration.outputDelayMaximum - this.configuration.outputDelayMinimum));
-                this.scheduleOutputCallback(delay, output);
+                this.storage.pause();
+                this.timerHandler.scheduleOutput(delay, output, previousPosition, position);
+
+                return result;
             } else {
                 result.setValue('output', output);
+                result.setNodeStatus(`[drive⇒${positionStatus}] ${previousPositionStatus} ⇒ ${positionStatus}`);
+
+                this.storage.pause();
+                this.timerHandler.scheduleUnpause(this.configuration.outputDriveTime);
+
+                return result;
             }
         }
-
-        const positionStatus = this.storage.getPosition() !== null ? this.storage.getPosition() : '?';
 
         let mode = this.storage.getMode();
         const special = this.storage.getSpecial();

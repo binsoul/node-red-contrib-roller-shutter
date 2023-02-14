@@ -2,15 +2,16 @@ import { Action, ActionFactory as ActionFactoryInterface } from '@binsoul/node-r
 import { Message } from '@binsoul/node-red-bundle-processing/dist/Message';
 import type { Node, NodeAPI } from '@node-red/registry';
 import { NodeMessageInFlow } from 'node-red';
-import { clearTimeout, setTimeout } from 'timers';
 import { OutputAction } from './Action/OutputAction';
 import { SensorAction } from './Action/SensorAction';
 import { SetFixedTimeAction } from './Action/SetFixedTimeAction';
+import { UnpauseAction } from './Action/UnpauseAction';
 import { UnsetFixedTimeAction } from './Action/UnsetFixedTimeAction';
 import { UnsetManualPositionAction } from './Action/UnsetManualPositionAction';
 import { UpdateAction } from './Action/UpdateAction';
 import type { Configuration } from './Configuration';
 import { Storage } from './Storage';
+import { TimerHandler } from './TimerHandler';
 
 interface MessageData extends NodeMessageInFlow {
     command?: string;
@@ -25,13 +26,14 @@ export class ActionFactory implements ActionFactoryInterface {
     private readonly RED: NodeAPI;
     private readonly node: Node;
     private readonly storage: Storage;
-    private updateTimer: Array<NodeJS.Timeout> = [];
+    private readonly timerHandler: TimerHandler;
 
     constructor(RED: NodeAPI, node: Node, configuration: Configuration) {
         this.RED = RED;
         this.node = node;
         this.configuration = configuration;
         this.storage = new Storage(configuration);
+        this.timerHandler = new TimerHandler(node);
     }
 
     build(message: Message): Action | Array<Action> | null {
@@ -41,19 +43,17 @@ export class ActionFactory implements ActionFactoryInterface {
         if (typeof command !== 'undefined' && ('' + command).trim() !== '') {
             switch (command.toLowerCase()) {
                 case 'setfixedtime':
-                    this.clearTimer();
-                    return [new SetFixedTimeAction(this.storage), new UpdateAction(this.configuration, this.storage, true, null)];
+                    return [new SetFixedTimeAction(this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
                 case 'unsetfixedtime':
-                    this.clearTimer();
-                    return [new UnsetFixedTimeAction(this.storage), new UpdateAction(this.configuration, this.storage, true, null)];
+                    return [new UnsetFixedTimeAction(this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
                 case 'unsetmanualposition':
-                    this.clearTimer();
-                    return [new UnsetManualPositionAction(this.storage), new UpdateAction(this.configuration, this.storage, true, null)];
+                    return [new UnsetManualPositionAction(this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
                 case 'update':
-                    this.clearTimer();
-                    return new UpdateAction(this.configuration, this.storage, false, null);
+                    return new UpdateAction(this.configuration, this.storage, false, this.timerHandler);
                 case 'output':
-                    return new OutputAction(this.configuration);
+                    return new OutputAction(this.configuration, this.storage, this.timerHandler);
+                case 'unpause':
+                    return [new UnpauseAction(this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
             }
 
             return null;
@@ -71,35 +71,9 @@ export class ActionFactory implements ActionFactoryInterface {
             case this.configuration.inputSunAzimuthTopic.toLowerCase():
             case this.configuration.inputSunAltitudeTopic.toLowerCase():
             case this.configuration.inputPositionTopic.toLowerCase():
-                return [new SensorAction(this.configuration, this.storage), new UpdateAction(this.configuration, this.storage, true, (delay, output) => this.scheduleUpdate(delay, output))];
+                return [new SensorAction(this.configuration, this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
         }
 
         return null;
-    }
-
-    private clearTimer(): void {
-        while (this.updateTimer.length) {
-            const timer = this.updateTimer.shift();
-            clearTimeout(timer);
-        }
-    }
-
-    private scheduleUpdate(delay: number, output: number): void {
-        const timer = setTimeout(() => {
-            for (let n = 0; n < this.updateTimer.length; n++) {
-                if (this.updateTimer[n] === timer) {
-                    this.updateTimer.splice(n, 1);
-                    break;
-                }
-            }
-
-            this.node.receive(<MessageData>{
-                topic: 'delayed output',
-                command: 'output',
-                payload: output,
-            });
-        }, delay * 1000);
-
-        this.updateTimer.push(timer);
     }
 }

@@ -32,6 +32,7 @@ export class Configuration {
 
     outputDelayMinimum: number | null = null;
     outputDelayMaximum: number | null = null;
+    outputDriveTime = 60;
 
     morningPositionOpen = 100;
     morningPositionClosed = 0;
@@ -111,6 +112,7 @@ export class Configuration {
         outputPositionStep = 1,
         outputDelayMinimum: number | null = null,
         outputDelayMaximum: number | null = null,
+        outputDriveTime = 60,
         morningPositionOpen = 100,
         morningPositionClosed = 0,
         dayPositionOpen = 100,
@@ -182,6 +184,7 @@ export class Configuration {
         this.outputPositionStep = outputPositionStep;
         this.outputDelayMinimum = outputDelayMinimum;
         this.outputDelayMaximum = outputDelayMaximum;
+        this.outputDriveTime = outputDriveTime;
         this.morningPositionOpen = morningPositionOpen;
         this.morningPositionClosed = morningPositionClosed;
         this.dayPositionOpen = dayPositionOpen;

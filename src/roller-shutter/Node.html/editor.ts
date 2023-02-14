@@ -114,6 +114,11 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             required: false,
             validate: RED.validators.number(true),
         },
+        outputDriveTime: {
+            value: null,
+            required: true,
+            validate: RED.validators.number(true),
+        },
         morningTemperatureMin: {
             value: null,
             required: false,
