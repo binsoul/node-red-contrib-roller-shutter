@@ -524,6 +524,7 @@ export class Storage {
         this.sunAzimuth = null;
         this.sunAltitude = null;
         this.manualPosition = null;
+        this.weekend = null;
     }
 
     private setMode(mode: string, reason: string): void {
