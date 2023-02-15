@@ -68,6 +68,7 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
     const outputDelayMinimum = getNumber(config.outputDelayMinimum, null);
     const outputDelayMaximum = getNumber(config.outputDelayMaximum, null);
     const outputDriveTime = getNumber(config.outputDriveTime, 60);
+    const output2Frequency = getString(config.output2Frequency, 'never');
     const morningPositionOpen = getNumber(config.morningPositionOpen, 100);
     const morningPositionClosed = getNumber(config.morningPositionClosed, 0);
     const dayPositionOpen = getNumber(config.dayPositionOpen, 100);
@@ -145,6 +146,7 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
         outputDelayMinimum,
         outputDelayMaximum,
         outputDriveTime,
+        output2Frequency,
         morningPositionOpen,
         morningPositionClosed,
         dayPositionOpen,

@@ -340,6 +340,26 @@ export class Storage {
         return this.paused;
     }
 
+    getState(): object {
+        return {
+            position: this.position,
+            mode: this.mode,
+            modeStartedAt: this.modeStartedAt,
+            modeReason: this.modeReason,
+            special: this.special,
+            specialStartedAt: this.specialStartedAt,
+            specialReason: this.specialReason,
+            outsideIlluminance: this.outsideIlluminance,
+            outsideTemperature: this.outsideTemperature,
+            insideTemperature: this.insideTemperature,
+            window: this.window,
+            manualPosition: this.manualPosition,
+            isWeekend: this.weekend,
+            sunAzimuth: this.sunAzimuth,
+            sunAltitude: this.sunAltitude,
+        };
+    }
+
     update(timestamp: number): number | null {
         if (this.paused) {
             return null;

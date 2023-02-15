@@ -44,12 +44,21 @@ export class OutputAction implements Action {
     defineOutput(): OutputDefinition {
         const result = new OutputDefinition();
 
-        result.set('output', {
+        result.set('output1', {
             target: this.configuration.outputValueTarget,
             property: this.configuration.outputValueProperty,
             type: 'number',
             channel: 0,
         });
+
+        if (this.configuration.output2Frequency !== 'never') {
+            result.set('output2', {
+                target: 'msg',
+                property: 'payload',
+                type: 'object',
+                channel: 1,
+            });
+        }
 
         if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {
             result.set('topic', {
@@ -69,7 +78,16 @@ export class OutputAction implements Action {
         const oldPositionStatus = input.getOptionalValue<number | null>('oldPosition') ?? '?';
         const newPositionStatus = input.getOptionalValue<number | null>('newPosition') ?? '?';
 
-        result.setValue('output', input.getRequiredValue<number>('output'));
+        result.setValue('output1', input.getRequiredValue<number>('output'));
+
+        const state = this.storage.getState();
+
+        if (this.configuration.output2Frequency === 'always') {
+            result.setValue('output2', state);
+        } else if (this.configuration.output2Frequency === 'changes' && oldPositionStatus !== newPositionStatus) {
+            result.setValue('output2', state);
+        }
+
         result.setNodeStatus(`[drive⇒${newPositionStatus}] ${oldPositionStatus} ⇒ ${newPositionStatus}`);
 
         if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {

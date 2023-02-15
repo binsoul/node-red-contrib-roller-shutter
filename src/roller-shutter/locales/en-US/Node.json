@@ -26,6 +26,7 @@
             "outputDelayMinimum": "Minimum",
             "outputDelayMaximum": "Maximum",
             "outputDriveTime": "Maximum drive time in seconds",
+            "output2Frequency": "Object output frequency",
             "morningTemperatureMin": "Minimum",
             "morningTemperatureDesired": "Desired",
             "morningTemperatureMax": "Maximum",
@@ -97,6 +98,7 @@
             "outputDelayMinimum": "",
             "outputDelayMaximum": "",
             "outputDriveTime": "",
+            "output2Frequency": "",
             "morningTemperatureMin": "",
             "morningTemperatureDesired": "",
             "morningTemperatureMax": "",
@@ -151,6 +153,13 @@
             "night": "Night",
             "shading": "Shading",
             "miscellaneous": "Miscellaneous"
+        },
+        "option": {
+            "outputMode": {
+                "always": "Always",
+                "changes": "If position has changed",
+                "never": "Never"
+            }
         }
     }
 }

@@ -558,6 +558,17 @@
                 </label>
                 <input type="text" id="node-input-outputTopic" class="binsoul-roller-shutter-input" />
             </div>
+
+            <div class="form-row" data-i18n="[title]binsoul-roller-shutter.help.output2Frequency">
+                <label for="node-input-output2Frequency" class="binsoul-roller-shutter-label">
+                    <span data-i18n="binsoul-roller-shutter.label.output2Frequency"></span>
+                </label>
+                <select id="node-input-output2Frequency" class="binsoul-roller-shutter-select">
+                    <option value="never" data-i18n="binsoul-roller-shutter.option.outputMode.never"></option>
+                    <option value="changes" data-i18n="binsoul-roller-shutter.option.outputMode.changes"></option>
+                    <option value="always" data-i18n="binsoul-roller-shutter.option.outputMode.always"></option>
+                </select>
+            </div>
         </div>
 
         <h3><span data-i18n="binsoul-roller-shutter.group.miscellaneous"></span></h3>
@@ -578,7 +589,8 @@
             min-width: 20rem;
         }
 
-        .binsoul-roller-shutter-input {
+
+        .binsoul-roller-shutter-input, .binsoul-roller-shutter-select {
             min-width: 100%;
         }
 

@@ -32,12 +32,21 @@ export class UpdateAction implements Action {
     defineOutput(): OutputDefinition {
         const result = new OutputDefinition();
 
-        result.set('output', {
+        result.set('output1', {
             target: this.configuration.outputValueTarget,
             property: this.configuration.outputValueProperty,
             type: 'number',
             channel: 0,
         });
+
+        if (this.configuration.output2Frequency !== 'never') {
+            result.set('output2', {
+                target: 'msg',
+                property: 'payload',
+                type: 'object',
+                channel: 1,
+            });
+        }
 
         if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {
             result.set('topic', {
@@ -63,27 +72,37 @@ export class UpdateAction implements Action {
             timestamp = input.getMessage().timestamp;
         }
 
-        const previousMode = this.storage.getMode();
-        const previousPosition = this.storage.getPosition();
-        const previousPositionStatus = this.storage.getPosition() !== null ? this.storage.getPosition() : '?';
+        const oldMode = this.storage.getMode();
+        const oldPosition = this.storage.getPosition();
+        const oldPositionStatus = this.storage.getPosition() !== null ? this.storage.getPosition() : '?';
 
         const output = this.storage.update(timestamp);
 
-        const position = this.storage.getPosition();
-        const positionStatus = position !== null ? position : '?';
+        const newPosition = this.storage.getPosition();
+        const newPositionStatus = newPosition !== null ? newPosition : '?';
+
+        const state = this.storage.getState();
+        if (this.configuration.output2Frequency === 'always') {
+            result.setValue('output2', state);
+        }
 
         if (output !== null) {
-            if (this.storage.getMode() !== previousMode && this.configuration.outputDelayMinimum !== null && this.configuration.outputDelayMaximum !== null) {
-                result.setNodeStatus(`[delay⇒${positionStatus}] ${previousMode} ⇒ ${this.storage.getMode()}`);
+            if (this.storage.getMode() !== oldMode && this.configuration.outputDelayMinimum !== null && this.configuration.outputDelayMaximum !== null) {
+                result.setNodeStatus(`[delay⇒${newPositionStatus}] ${oldMode} ⇒ ${this.storage.getMode()}`);
 
                 const delay = Math.round(this.configuration.outputDelayMinimum + Math.random() * (this.configuration.outputDelayMaximum - this.configuration.outputDelayMinimum));
                 this.storage.pause();
-                this.timerHandler.scheduleOutput(delay, output, previousPosition, position);
+                this.timerHandler.scheduleOutput(delay, output, oldPosition, newPosition);
 
                 return result;
             } else {
-                result.setValue('output', output);
-                result.setNodeStatus(`[drive⇒${positionStatus}] ${previousPositionStatus} ⇒ ${positionStatus}`);
+                result.setValue('output1', output);
+
+                if (this.configuration.output2Frequency === 'changes') {
+                    result.setValue('output2', state);
+                }
+
+                result.setNodeStatus(`[drive⇒${newPositionStatus}] ${oldPositionStatus} ⇒ ${newPositionStatus}`);
 
                 if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {
                     result.setValue('topic', this.configuration.outputTopic);
@@ -118,9 +137,9 @@ export class UpdateAction implements Action {
         }
 
         if (reason !== '') {
-            result.setNodeStatus(`[${mode}⇒${positionStatus}] ${reason}`);
+            result.setNodeStatus(`[${mode}⇒${newPositionStatus}] ${reason}`);
         } else {
-            result.setNodeStatus(`[${mode}⇒${positionStatus}]`);
+            result.setNodeStatus(`[${mode}⇒${newPositionStatus}]`);
         }
 
         return result;

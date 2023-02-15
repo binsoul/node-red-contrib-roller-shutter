@@ -39,6 +39,7 @@ export interface UserConfigurationOptions {
     outputDelayMinimum: number | null;
     outputDelayMaximum: number | null;
     outputDriveTime: number | null;
+    output2Frequency: string;
 
     morningPositionOpen: number;
     morningPositionClosed: number;

@@ -3,7 +3,9 @@ import type { UserConfigurationOptions } from '../UserConfiguration';
 
 declare const RED: EditorRED;
 
-interface NodeEditorProperties extends EditorNodeProperties, UserConfigurationOptions {}
+interface NodeEditorProperties extends EditorNodeProperties, UserConfigurationOptions {
+    outputs: number;
+}
 
 RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
     category: 'function',
@@ -130,6 +132,10 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             value: null,
             required: true,
             validate: RED.validators.number(true),
+        },
+        output2Frequency: {
+            value: 'never',
+            required: true,
         },
         morningTemperatureMin: {
             value: null,
@@ -341,19 +347,19 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             required: false,
         },
         name: { value: '' },
+        outputs: { value: 1 },
     },
     inputs: 1,
-    outputs: 1,
     icon: 'font-awesome/fa-window-maximize',
     label: function () {
-        return this.name || 'Roller shutter';
+        return this.name || 'roller shutter';
     },
     labelStyle: function () {
         return this.name ? 'node_label_italic' : '';
     },
-    paletteLabel: 'Roller shutter',
+    paletteLabel: 'roller shutter',
     inputLabels: 'Incoming message',
-    outputLabels: ['Outgoing message'],
+    outputLabels: ['Position output', 'Object output'],
     oneditprepare: function () {
         setTimeout(() => {
             $('.binsoul-roller-shutter-wrapper').css('width', '100%');
@@ -362,6 +368,10 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
                 display: 'flex',
             });
         });
+
+        const output2FrequencyInput = $('#node-input-output2Frequency');
+        this.outputs = output2FrequencyInput.val() !== 'never' ? 2 : 1;
+        output2FrequencyInput.on('change', (e: JQuery.TriggeredEvent) => (this.outputs = e.currentTarget.value !== 'never' ? 2 : 1));
 
         $('.binsoul-roller-shutter-wrapper').accordion({
             heightStyle: 'content',
