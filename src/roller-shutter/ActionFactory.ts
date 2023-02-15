@@ -74,6 +74,7 @@ export class ActionFactory implements ActionFactoryInterface {
             case this.configuration.inputSunAzimuthTopic.toLowerCase():
             case this.configuration.inputSunAltitudeTopic.toLowerCase():
             case this.configuration.inputPositionTopic.toLowerCase():
+            case this.configuration.inputWeekendTopic.toLowerCase():
                 return [new SensorAction(this.configuration, this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
         }
 
