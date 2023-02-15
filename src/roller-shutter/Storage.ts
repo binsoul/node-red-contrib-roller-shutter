@@ -257,10 +257,17 @@ export class Storage {
             let result = remap(value, this.configuration.outputPositionClosed, this.configuration.outputPositionOpen, 0, 100);
             result = Math.round(result);
 
-            this.manualPosition = result;
-
-            if (this.manualPosition === this.position) {
+            if (this.position === null) {
+                // set initial position
+                this.position = result;
                 this.manualPosition = null;
+            } else {
+                this.manualPosition = result;
+
+                if (this.manualPosition === this.position) {
+                    // reset manual position if it was changed to the automatic position
+                    this.manualPosition = null;
+                }
             }
         }
     }
@@ -466,12 +473,21 @@ export class Storage {
         }
 
         if (this.manualPosition !== null) {
+            // position set manually
             this.position = this.manualPosition;
 
             return null;
         }
 
+        if (this.position === null) {
+            // initial position
+            this.position = position;
+
+            return null;
+        }
+
         if (position === null || position === this.position) {
+            // position not changed or unknown
             return null;
         }
 
