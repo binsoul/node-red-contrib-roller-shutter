@@ -1,7 +1,7 @@
 {
     "name": "@binsoul/node-red-contrib-roller-shutter",
     "version": "0.0.5",
-    "description": "",
+    "description": "Control a roller shutter with a sensor for outside illuminance. Optionally use outside and inside temperature for shading during the day and cooling during the night.",
     "keywords": [
         "node-red",
         "roller shutter"
