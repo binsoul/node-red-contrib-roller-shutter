@@ -31,6 +31,7 @@ export interface UserConfigurationOptions {
 
     outputValueProperty: string;
     outputValueTarget: string;
+    outputTopic: string | null;
 
     outputPositionOpen: number;
     outputPositionClosed: number;

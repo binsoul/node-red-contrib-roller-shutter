@@ -61,6 +61,7 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
     const inputWeekendTopic = getString(config.inputWeekendTopic, 'weekend');
     const outputValueProperty = getString(config.inputOutsideIlluminanceProperty, 'payload');
     const outputValueTarget = getString(config.inputOutsideIlluminanceSource, 'msg');
+    const outputTopic = getString(config.outputTopic, null);
     const outputPositionOpen = getNumber(config.outputPositionOpen, 100);
     const outputPositionClosed = getNumber(config.outputPositionClosed, 0);
     const outputPositionStep = getNumber(config.outputPositionStep, 1);
@@ -137,6 +138,7 @@ export function buildConfiguration(config: UserConfiguration): Configuration {
         inputWeekendTopic.toLowerCase(),
         outputValueProperty,
         outputValueTarget,
+        outputTopic,
         outputPositionOpen,
         outputPositionClosed,
         outputPositionStep,

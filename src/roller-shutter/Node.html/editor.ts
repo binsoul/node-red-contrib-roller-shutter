@@ -97,6 +97,10 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             value: 'msg',
             required: true,
         },
+        outputTopic: {
+            value: null,
+            required: false,
+        },
         outputPositionOpen: {
             value: 100,
             required: true,

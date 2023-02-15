@@ -51,6 +51,15 @@ export class OutputAction implements Action {
             channel: 0,
         });
 
+        if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {
+            result.set('topic', {
+                target: 'msg',
+                property: 'topic',
+                type: 'string',
+                channel: 0,
+            });
+        }
+
         return result;
     }
 
@@ -62,6 +71,10 @@ export class OutputAction implements Action {
 
         result.setValue('output', input.getRequiredValue<number>('output'));
         result.setNodeStatus(`[drive⇒${newPositionStatus}] ${oldPositionStatus} ⇒ ${newPositionStatus}`);
+
+        if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {
+            result.setValue('topic', this.configuration.outputTopic);
+        }
 
         this.storage.pause();
         this.timerHandler.scheduleUnpause(this.configuration.outputDriveTime);

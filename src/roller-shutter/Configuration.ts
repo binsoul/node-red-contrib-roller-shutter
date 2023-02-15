@@ -6,6 +6,7 @@ export class Configuration {
     inputOutsideIlluminanceSource: string;
     outputValueProperty: string;
     outputValueTarget: string;
+    outputTopic: string | null = null;
     inputOutsideIlluminanceTopic = 'outsideIlluminance';
     inputOutsideTemperatureSource = 'msg';
     inputOutsideTemperatureProperty = 'payload';
@@ -113,6 +114,7 @@ export class Configuration {
         inputWeekendTopic = '',
         outputValueProperty = 'payload',
         outputValueTarget = 'msg',
+        outputTopic: string | null = null,
         outputPositionOpen = 100,
         outputPositionClosed = 0,
         outputPositionStep = 1,
@@ -188,6 +190,7 @@ export class Configuration {
         this.inputWeekendTopic = inputWeekendTopic;
         this.outputValueProperty = outputValueProperty;
         this.outputValueTarget = outputValueTarget;
+        this.outputTopic = outputTopic;
         this.outputPositionOpen = outputPositionOpen;
         this.outputPositionClosed = outputPositionClosed;
         this.outputPositionStep = outputPositionStep;
