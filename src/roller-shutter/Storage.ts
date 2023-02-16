@@ -137,6 +137,7 @@ export class Storage {
     private sunAzimuth: number | null = null;
     private sunAltitude: number | null = null;
     private manualPosition: number | null = null;
+    private manualStartedAt: Date | null = null;
     private weekend: boolean | null = null;
 
     constructor(configuration: Configuration) {
@@ -251,6 +252,8 @@ export class Storage {
         } else {
             if (value === null) {
                 this.manualPosition = null;
+                this.manualStartedAt = null;
+
                 return;
             }
 
@@ -261,15 +264,11 @@ export class Storage {
                 // set initial position
                 this.position = result;
                 this.manualPosition = null;
+                this.manualStartedAt = null;
             } else {
-                this.manualPosition = result;
-
-                if (this.manualPosition === this.position) {
-                    // reset manual position if it was changed to the automatic position
-                    this.manualPosition = null;
-                }
-
                 this.position = result;
+                this.manualPosition = result;
+                this.manualStartedAt = this.manualStartedAt ?? new Date();
             }
         }
     }
@@ -487,11 +486,13 @@ export class Storage {
         if (modeChanged) {
             // reset manual position if mode changes
             this.manualPosition = null;
+            this.manualStartedAt = null;
         }
 
         if (position === this.manualPosition) {
             // reset manual position if it was changed to the automatic position
             this.manualPosition = null;
+            this.manualStartedAt = null;
         }
 
         if (this.manualPosition !== null) {
