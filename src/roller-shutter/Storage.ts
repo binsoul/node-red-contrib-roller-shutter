@@ -704,15 +704,15 @@ export class Storage {
             if (this.window === 'open') {
                 isWindowOpenOrTilted = true;
                 position = configuration.positionOpen;
-                reason = 'window open';
+                reason = 'open';
                 special = 'window';
             } else if (this.window === 'tilted') {
                 isWindowOpenOrTilted = true;
                 position = this.configuration.nightPositionTilted;
-                reason = 'window tilted';
+                reason = 'tilted';
                 special = 'window';
             } else {
-                notReason = this.windowChanged ? 'window closed' : '';
+                notReason = this.windowChanged ? 'closed' : '';
             }
         }
 
