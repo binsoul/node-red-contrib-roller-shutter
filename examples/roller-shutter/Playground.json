@@ -40,16 +40,17 @@
         "id": "09e395c6ad237cfc",
         "type": "debug",
         "z": "75b1632e8be4d5e1",
-        "name": "debug 1",
+        "name": "Debug position",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 380,
-        "y": 60,
+        "x": 560,
+        "y": 40,
         "wires": []
     },
     {
@@ -78,12 +79,14 @@
         "inputWeekendTopic": "weekend",
         "outputValueProperty": "payload",
         "outputValueTarget": "msg",
+        "outputTopic": "",
         "outputPositionOpen": "100",
         "outputPositionClosed": "0",
         "outputPositionStep": "1",
         "outputDelayMinimum": "5",
         "outputDelayMaximum": "10",
         "outputDriveTime": "5",
+        "output2Frequency": "always",
         "morningTemperatureMin": "12",
         "morningTemperatureDesired": "21",
         "morningTemperatureMax": "23",
@@ -127,11 +130,15 @@
         "shadingPositionClosed": "25",
         "allowNightChange": true,
         "name": "",
+        "outputs": 2,
         "x": 210,
         "y": 60,
         "wires": [
             [
                 "09e395c6ad237cfc"
+            ],
+            [
+                "4526fe31c84d318c"
             ]
         ]
     },
@@ -1450,6 +1457,23 @@
         ],
         "x": 375,
         "y": 620,
+        "wires": []
+    },
+    {
+        "id": "4526fe31c84d318c",
+        "type": "debug",
+        "z": "75b1632e8be4d5e1",
+        "name": "Debug object",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 80,
         "wires": []
     }
 ]
