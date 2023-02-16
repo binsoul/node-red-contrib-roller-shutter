@@ -129,7 +129,7 @@ RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
             validate: RED.validators.number(true),
         },
         outputDriveTime: {
-            value: null,
+            value: 60,
             required: true,
             validate: RED.validators.number(true),
         },
