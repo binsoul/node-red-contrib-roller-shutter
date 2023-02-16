@@ -61,11 +61,18 @@ export class OutputAction implements Action {
         }
 
         if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {
-            result.set('topic', {
+            result.set('topic1', {
                 target: 'msg',
                 property: 'topic',
                 type: 'string',
                 channel: 0,
+            });
+
+            result.set('topic2', {
+                target: 'msg',
+                property: 'topic',
+                type: 'string',
+                channel: 1,
             });
         }
 
@@ -79,20 +86,27 @@ export class OutputAction implements Action {
         const newPositionStatus = input.getOptionalValue<number | null>('newPosition') ?? '?';
 
         result.setValue('output1', input.getRequiredValue<number>('output'));
+        if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {
+            result.setValue('topic1', this.configuration.outputTopic);
+        }
 
         const state = this.storage.getState();
 
         if (this.configuration.output2Frequency === 'always') {
             result.setValue('output2', state);
+
+            if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {
+                result.setValue('topic2', this.configuration.outputTopic);
+            }
         } else if (this.configuration.output2Frequency === 'changes' && oldPositionStatus !== newPositionStatus) {
             result.setValue('output2', state);
+
+            if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {
+                result.setValue('topic2', this.configuration.outputTopic);
+            }
         }
 
         result.setNodeStatus(`[drive⇒${newPositionStatus}] ${oldPositionStatus} ⇒ ${newPositionStatus}`);
-
-        if (this.configuration.outputTopic !== null && ('' + this.configuration.outputTopic).trim() !== '') {
-            result.setValue('topic', this.configuration.outputTopic);
-        }
 
         this.storage.pause();
         this.timerHandler.scheduleUnpause(this.configuration.outputDriveTime);
