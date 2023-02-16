@@ -297,12 +297,12 @@ export class Storage {
         return this.mode || 'unknown';
     }
 
-    getSpecial(): string {
+    getModeStartedAt(): Date | null {
         if (this.manualPosition !== null) {
-            return '';
+            return this.manualStartedAt;
         }
 
-        return this.special;
+        return this.modeStartedAt;
     }
 
     getModeReason(): string {
@@ -311,6 +311,22 @@ export class Storage {
         }
 
         return this.modeReason;
+    }
+
+    getSpecial(): string {
+        if (this.manualPosition !== null) {
+            return '';
+        }
+
+        return this.special;
+    }
+
+    getSpecialStartedAt(): Date | null {
+        if (this.manualPosition !== null) {
+            return null;
+        }
+
+        return this.specialStartedAt;
     }
 
     getSpecialReason(): string {
@@ -343,18 +359,17 @@ export class Storage {
 
     getState(): object {
         return {
-            position: this.position,
-            mode: this.mode,
-            modeStartedAt: this.modeStartedAt,
-            modeReason: this.modeReason,
-            special: this.special,
-            specialStartedAt: this.specialStartedAt,
-            specialReason: this.specialReason,
+            position: this.getPosition(),
+            mode: this.getMode(),
+            modeStartedAt: this.getModeStartedAt(),
+            modeReason: this.getModeReason(),
+            special: this.getSpecial(),
+            specialStartedAt: this.getSpecialStartedAt(),
+            specialReason: this.getSpecialReason(),
             outsideIlluminance: this.outsideIlluminance,
             outsideTemperature: this.outsideTemperature,
             insideTemperature: this.insideTemperature,
             window: this.window,
-            manualPosition: this.manualPosition,
             isWeekend: this.weekend,
             sunAzimuth: this.sunAzimuth,
             sunAltitude: this.sunAltitude,
