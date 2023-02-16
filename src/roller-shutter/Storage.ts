@@ -268,6 +268,8 @@ export class Storage {
                     // reset manual position if it was changed to the automatic position
                     this.manualPosition = null;
                 }
+
+                this.position = result;
             }
         }
     }
