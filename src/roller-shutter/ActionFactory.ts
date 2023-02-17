@@ -80,4 +80,9 @@ export class ActionFactory implements ActionFactoryInterface {
 
         return null;
     }
+
+    teardown(): void {
+        this.timerHandler.clearTimer();
+        this.node.status('');
+    }
 }

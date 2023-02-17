@@ -13,6 +13,7 @@ const nodeInitializer: NodeInitializer = (RED): void => {
         const messageHandler = new MessageHandler(RED, this, actionFactory);
 
         this.on('input', (msg, send, done) => messageHandler.handle(msg, send, done));
+        this.on('close', () => actionFactory.teardown());
     }
 
     RED.nodes.registerType('binsoul-roller-shutter', NodeConstructor);
