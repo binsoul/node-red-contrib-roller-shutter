@@ -1,14 +1,17 @@
 import { Action, Input, InputDefinition, Output, OutputDefinition } from '@binsoul/node-red-bundle-processing';
 import type { Configuration } from '../Configuration';
 import { Storage } from '../Storage';
+import { TimerHandler } from '../TimerHandler';
 
 export class SensorAction implements Action {
     private readonly configuration: Configuration;
-    private storage: Storage;
+    private readonly storage: Storage;
+    private readonly timerHandler: TimerHandler;
 
-    constructor(configuration: Configuration, storage: Storage) {
+    constructor(configuration: Configuration, storage: Storage, timerHandler: TimerHandler) {
         this.configuration = configuration;
         this.storage = storage;
+        this.timerHandler = timerHandler;
     }
 
     defineInput(): InputDefinition {
@@ -110,6 +113,7 @@ export class SensorAction implements Action {
 
         if (topic === this.configuration.inputWeekendTopic) {
             this.configuration.setWeekend(input.getRequiredValue<boolean>('payloadWeekend'));
+            this.timerHandler.scheduleStartAndStopTimes();
         }
 
         return new Output();

@@ -348,7 +348,7 @@ export class Configuration {
         return result;
     }
 
-    getDayStartTime(dateTime: Date) {
+    getDayStartTime(dateTime: Date): number | null {
         if (this.fixedTime !== null) {
             dateTime = new Date(this.fixedTime);
         }
@@ -356,7 +356,7 @@ export class Configuration {
         return selectTime(dateTime, this.dayStartTimeWorkday, this.dayStartTimeWeekend, this.isWeekend(dateTime));
     }
 
-    getDayStopTime(dateTime: Date) {
+    getDayStopTime(dateTime: Date): number | null {
         if (this.fixedTime !== null) {
             dateTime = new Date(this.fixedTime);
         }
@@ -364,7 +364,7 @@ export class Configuration {
         return selectTime(dateTime, this.dayStopTimeWorkday, this.dayStopTimeWeekend, this.isWeekend(dateTime));
     }
 
-    getNightStartTime(dateTime: Date) {
+    getNightStartTime(dateTime: Date): number | null {
         if (this.fixedTime !== null) {
             dateTime = new Date(this.fixedTime);
         }
@@ -372,7 +372,7 @@ export class Configuration {
         return selectTime(dateTime, this.nightStartTimeWorkday, this.nightStartTimeWeekend, this.isWeekend(dateTime));
     }
 
-    getNightStopTime(dateTime: Date) {
+    getNightStopTime(dateTime: Date): number | null {
         if (this.fixedTime !== null) {
             dateTime = new Date(this.fixedTime);
         }

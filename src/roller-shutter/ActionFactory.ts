@@ -34,7 +34,7 @@ export class ActionFactory implements ActionFactoryInterface {
         this.node = node;
         this.configuration = configuration;
         this.storage = new Storage(configuration);
-        this.timerHandler = new TimerHandler(node);
+        this.timerHandler = new TimerHandler(configuration, node);
     }
 
     build(message: Message): Action | Array<Action> | null {
@@ -44,9 +44,9 @@ export class ActionFactory implements ActionFactoryInterface {
         if (typeof command !== 'undefined' && ('' + command).trim() !== '') {
             switch (command.toLowerCase()) {
                 case 'setfixedtime':
-                    return [new SetFixedTimeAction(this.configuration, this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
+                    return [new SetFixedTimeAction(this.configuration, this.storage, this.timerHandler), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
                 case 'unsetfixedtime':
-                    return [new UnsetFixedTimeAction(this.configuration, this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
+                    return [new UnsetFixedTimeAction(this.configuration, this.storage, this.timerHandler), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
                 case 'unsetmanualposition':
                     return [new UnsetManualPositionAction(this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
                 case 'update':
@@ -75,7 +75,7 @@ export class ActionFactory implements ActionFactoryInterface {
             case this.configuration.inputSunAltitudeTopic.toLowerCase():
             case this.configuration.inputPositionTopic.toLowerCase():
             case this.configuration.inputWeekendTopic.toLowerCase():
-                return [new SensorAction(this.configuration, this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
+                return [new SensorAction(this.configuration, this.storage, this.timerHandler), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
         }
 
         return null;

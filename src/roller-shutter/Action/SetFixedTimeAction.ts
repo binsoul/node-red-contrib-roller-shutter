@@ -1,14 +1,17 @@
 import { Action, Input, InputDefinition, Output, OutputDefinition } from '@binsoul/node-red-bundle-processing';
 import { Configuration } from '../Configuration';
 import { Storage } from '../Storage';
+import { TimerHandler } from '../TimerHandler';
 
 export class SetFixedTimeAction implements Action {
     private readonly configuration: Configuration;
     private readonly storage: Storage;
+    private readonly timerHandler: TimerHandler;
 
-    constructor(configuration: Configuration, storage: Storage) {
+    constructor(configuration: Configuration, storage: Storage, timerHandler: TimerHandler) {
         this.configuration = configuration;
         this.storage = storage;
+        this.timerHandler = timerHandler;
     }
 
     defineOutput() {
@@ -32,6 +35,7 @@ export class SetFixedTimeAction implements Action {
         const timestamp = input.getRequiredValue<number>('timestamp');
         this.configuration.setFixedTime(timestamp);
         this.storage.setFixedTime(timestamp);
+        this.timerHandler.scheduleStartAndStopTimes();
 
         return new Output();
     }
