@@ -44,9 +44,9 @@ export class ActionFactory implements ActionFactoryInterface {
         if (typeof command !== 'undefined' && ('' + command).trim() !== '') {
             switch (command.toLowerCase()) {
                 case 'setfixedtime':
-                    return [new SetFixedTimeAction(this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
+                    return [new SetFixedTimeAction(this.configuration, this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
                 case 'unsetfixedtime':
-                    return [new UnsetFixedTimeAction(this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
+                    return [new UnsetFixedTimeAction(this.configuration, this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
                 case 'unsetmanualposition':
                     return [new UnsetManualPositionAction(this.storage), new UpdateAction(this.configuration, this.storage, true, this.timerHandler)];
                 case 'update':
