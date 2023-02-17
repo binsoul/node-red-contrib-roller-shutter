@@ -13,7 +13,9 @@ interface MessageData extends NodeMessageInFlow {
 export class TimerHandler {
     private configuration: Configuration;
     private node: Node;
-    private timers: Array<NodeJS.Timeout> = [];
+    private dailyTimer: NodeJS.Timeout | null = null;
+    private messageTimers: Array<NodeJS.Timeout> = [];
+    private startAndStopTimers: Array<NodeJS.Timeout> = [];
 
     constructor(configuration: Configuration, node: Node) {
         this.configuration = configuration;
@@ -23,21 +25,26 @@ export class TimerHandler {
         this.scheduleStartAndStopTimes();
     }
 
-    public clearTimer(): void {
-        while (this.timers.length) {
-            const timer = this.timers.shift();
+    public clearTimers(): void {
+        if (this.dailyTimer !== null) {
+            clearTimeout(this.dailyTimer);
+            this.dailyTimer = null;
+        }
+
+        while (this.messageTimers.length) {
+            const timer = this.messageTimers.shift();
+            clearTimeout(timer);
+        }
+
+        while (this.startAndStopTimers.length) {
+            const timer = this.startAndStopTimers.shift();
             clearTimeout(timer);
         }
     }
 
     public scheduleUnpause(delayInSeconds: number): void {
         const timer = setTimeout(() => {
-            for (let n = 0; n < this.timers.length; n++) {
-                if (this.timers[n] === timer) {
-                    this.timers.splice(n, 1);
-                    break;
-                }
-            }
+            this.removeTimer(timer);
 
             this.node.receive(<MessageData>{
                 topic: 'unpause',
@@ -45,17 +52,12 @@ export class TimerHandler {
             });
         }, Math.round(delayInSeconds * 1000));
 
-        this.timers.push(timer);
+        this.messageTimers.push(timer);
     }
 
     public scheduleOutput(delayInSeconds: number, output: number, oldPosition: number | null, newPosition: number | null): void {
         const timer = setTimeout(() => {
-            for (let n = 0; n < this.timers.length; n++) {
-                if (this.timers[n] === timer) {
-                    this.timers.splice(n, 1);
-                    break;
-                }
-            }
+            this.removeTimer(timer);
 
             this.node.receive(<MessageData>{
                 topic: 'delayed output',
@@ -66,17 +68,12 @@ export class TimerHandler {
             });
         }, Math.round(delayInSeconds * 1000));
 
-        this.timers.push(timer);
+        this.messageTimers.push(timer);
     }
 
     public scheduleUpdate(delayInSeconds: number): void {
         const timer = setTimeout(() => {
-            for (let n = 0; n < this.timers.length; n++) {
-                if (this.timers[n] === timer) {
-                    this.timers.splice(n, 1);
-                    break;
-                }
-            }
+            this.removeTimer(timer);
 
             this.node.receive(<MessageData>{
                 topic: 'delayed update',
@@ -84,10 +81,15 @@ export class TimerHandler {
             });
         }, Math.round(delayInSeconds * 1000));
 
-        this.timers.push(timer);
+        this.messageTimers.push(timer);
     }
 
     public scheduleStartAndStopTimes(): void {
+        while (this.startAndStopTimers.length) {
+            const timer = this.startAndStopTimers.shift();
+            clearTimeout(timer);
+        }
+
         const now = new Date();
 
         const times = [this.configuration.getDayStartTime(now), this.configuration.getNightStartTime(now), this.configuration.getDayStopTime(now), this.configuration.getNightStopTime(now)];
@@ -100,30 +102,46 @@ export class TimerHandler {
 
                 if (delay >= 0) {
                     this.scheduleUpdate(delay / 1000 + 1);
+                    const timer = this.messageTimers.pop();
+                    if (typeof timer !== 'undefined') {
+                        this.startAndStopTimers.push(timer);
+                    }
                 }
             }
         }
     }
 
     private scheduleDailyUpdate(): void {
+        if (this.dailyTimer !== null) {
+            clearTimeout(this.dailyTimer);
+        }
+
         const now = new Date();
         const tomorrow = new Date();
         tomorrow.setDate(now.getDate() + 1);
         tomorrow.setHours(0, 4, 20, 0);
         const delay = tomorrow.getTime() - now.getTime();
 
-        const timer = setTimeout(() => {
-            for (let n = 0; n < this.timers.length; n++) {
-                if (this.timers[n] === timer) {
-                    this.timers.splice(n, 1);
-                    break;
-                }
-            }
-
+        this.dailyTimer = setTimeout(() => {
+            this.dailyTimer = null;
             this.scheduleStartAndStopTimes();
             this.scheduleDailyUpdate();
         }, delay);
+    }
 
-        this.timers.push(timer);
+    private removeTimer(timer: NodeJS.Timeout): void {
+        for (let n = 0; n < this.messageTimers.length; n++) {
+            if (this.messageTimers[n] === timer) {
+                this.messageTimers.splice(n, 1);
+                break;
+            }
+        }
+
+        for (let n = 0; n < this.startAndStopTimers.length; n++) {
+            if (this.startAndStopTimers[n] === timer) {
+                this.startAndStopTimers.splice(n, 1);
+                break;
+            }
+        }
     }
 }

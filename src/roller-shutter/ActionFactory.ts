@@ -82,7 +82,7 @@ export class ActionFactory implements ActionFactoryInterface {
     }
 
     teardown(): void {
-        this.timerHandler.clearTimer();
+        this.timerHandler.clearTimers();
         this.node.status('');
     }
 }
