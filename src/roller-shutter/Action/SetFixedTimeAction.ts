@@ -1,10 +1,13 @@
 import { Action, Input, InputDefinition, Output, OutputDefinition } from '@binsoul/node-red-bundle-processing';
+import { Configuration } from '../Configuration';
 import { Storage } from '../Storage';
 
 export class SetFixedTimeAction implements Action {
-    protected readonly storage: Storage;
+    private readonly configuration: Configuration;
+    private readonly storage: Storage;
 
-    constructor(storage: Storage) {
+    constructor(configuration: Configuration, storage: Storage) {
+        this.configuration = configuration;
         this.storage = storage;
     }
 
@@ -27,6 +30,7 @@ export class SetFixedTimeAction implements Action {
 
     execute(input: Input): Output {
         const timestamp = input.getRequiredValue<number>('timestamp');
+        this.configuration.setFixedTime(timestamp);
         this.storage.setFixedTime(timestamp);
 
         return new Output();

@@ -1,4 +1,80 @@
 /**
+ * Parses the given time string and return a modified Date object for the given timestamp.
+ */
+function parseTime(time: string, timestamp: Date): Date | null {
+    let hour, minute;
+    const pm = time.match(/p/i) !== null;
+    const num = time.replace(/[^0-9]/g, '');
+
+    // Parse for hour and minute
+    switch (num.length) {
+        case 4:
+            hour = parseInt(num[0] + num[1], 10);
+            minute = parseInt(num[2] + num[3], 10);
+            break;
+        case 3:
+            hour = parseInt(num[0], 10);
+            minute = parseInt(num[1] + num[2], 10);
+            break;
+        case 2:
+        case 1:
+            hour = parseInt(num[0] + (num[1] || ''), 10);
+            minute = 0;
+            break;
+        default:
+            return null;
+    }
+
+    // Make sure hour is in 24-hour format
+    if (pm && hour > 0 && hour < 12) {
+        hour += 12;
+    }
+
+    // Keep within range
+    if (hour <= 0 || hour >= 24) {
+        hour = 0;
+    }
+    if (minute < 0 || minute > 59) {
+        minute = 0;
+    }
+
+    const result = new Date(timestamp.getTime());
+    result.setHours(hour, minute, 0);
+
+    return result;
+}
+
+/**
+ * Returns either the time for workdays or the time for weekends depending on the day of the week.
+ */
+function selectTime(timestamp: Date, workdayTime: string | null, weekendTime: string | null, isWeekend: boolean): number | null {
+    if (!isWeekend) {
+        if (workdayTime === null) {
+            return null;
+        }
+
+        const parsedTimeWorkday = parseTime(workdayTime, timestamp);
+        return parsedTimeWorkday !== null ? parsedTimeWorkday.getTime() : null;
+    }
+
+    if (weekendTime === null) {
+        return null;
+    }
+
+    const parsedTimeWeekend = parseTime(weekendTime, timestamp);
+
+    return parsedTimeWeekend !== null ? parsedTimeWeekend.getTime() : null;
+}
+
+interface ModeConfiguration {
+    positionOpen: number | null;
+    positionClosed: number | null;
+    temperatureMin: number | null;
+    temperatureDesired: number | null;
+    temperatureMax: number | null;
+}
+
+/**
  * Sanitized configuration generated from user input.
  */
 export class Configuration {
@@ -87,6 +163,9 @@ export class Configuration {
     shadingEndAltitude: number | null = null;
 
     allowNightChange = true;
+
+    private fixedTime: number | null = null;
+    private weekend: boolean | null = null;
 
     constructor(
         inputOutsideIlluminanceSource = 'msg',
@@ -242,5 +321,101 @@ export class Configuration {
         this.shadingEndAzimuth = shadingEndAzimuth;
         this.shadingEndAltitude = shadingEndAltitude;
         this.allowNightChange = allowNightChange;
+    }
+
+    setFixedTime(value: number | null): void {
+        this.fixedTime = value;
+    }
+
+    setWeekend(value: boolean | null) {
+        this.weekend = value;
+    }
+
+    isWeekend(dateTime: Date): boolean {
+        if (this.fixedTime !== null) {
+            dateTime = new Date(this.fixedTime);
+        }
+
+        let result;
+
+        if (this.weekend !== null) {
+            result = this.weekend;
+        } else {
+            const dayOfWeek = dateTime.getDay();
+            result = dayOfWeek === 6 || dayOfWeek === 0;
+        }
+
+        return result;
+    }
+
+    getDayStartTime(dateTime: Date) {
+        if (this.fixedTime !== null) {
+            dateTime = new Date(this.fixedTime);
+        }
+
+        return selectTime(dateTime, this.dayStartTimeWorkday, this.dayStartTimeWeekend, this.isWeekend(dateTime));
+    }
+
+    getDayStopTime(dateTime: Date) {
+        if (this.fixedTime !== null) {
+            dateTime = new Date(this.fixedTime);
+        }
+
+        return selectTime(dateTime, this.dayStopTimeWorkday, this.dayStopTimeWeekend, this.isWeekend(dateTime));
+    }
+
+    getNightStartTime(dateTime: Date) {
+        if (this.fixedTime !== null) {
+            dateTime = new Date(this.fixedTime);
+        }
+
+        return selectTime(dateTime, this.nightStartTimeWorkday, this.nightStartTimeWeekend, this.isWeekend(dateTime));
+    }
+
+    getNightStopTime(dateTime: Date) {
+        if (this.fixedTime !== null) {
+            dateTime = new Date(this.fixedTime);
+        }
+
+        return selectTime(dateTime, this.nightStopTimeWorkday, this.nightStopTimeWeekend, this.isWeekend(dateTime));
+    }
+
+    /**
+     * Returns the configuration for the given mode.
+     */
+    getModeConfiguration(mode: string): ModeConfiguration {
+        if (mode === 'morning') {
+            return {
+                positionOpen: this.morningPositionOpen,
+                positionClosed: this.morningPositionClosed,
+                temperatureMin: this.morningTemperatureMin,
+                temperatureDesired: this.morningTemperatureDesired,
+                temperatureMax: this.morningTemperatureMax,
+            };
+        } else if (mode === 'evening') {
+            return {
+                positionOpen: this.eveningPositionOpen,
+                positionClosed: this.eveningPositionClosed,
+                temperatureMin: this.eveningTemperatureMin,
+                temperatureDesired: this.eveningTemperatureDesired,
+                temperatureMax: this.eveningTemperatureMax,
+            };
+        } else if (mode === 'night') {
+            return {
+                positionOpen: this.nightPositionOpen,
+                positionClosed: this.nightPositionClosed,
+                temperatureMin: this.nightTemperatureMin,
+                temperatureDesired: this.nightTemperatureDesired,
+                temperatureMax: this.nightTemperatureMax,
+            };
+        }
+
+        return {
+            positionOpen: this.dayPositionOpen,
+            positionClosed: this.dayPositionClosed,
+            temperatureMin: this.dayTemperatureMin,
+            temperatureDesired: this.dayTemperatureDesired,
+            temperatureMax: this.dayTemperatureMax,
+        };
     }
 }

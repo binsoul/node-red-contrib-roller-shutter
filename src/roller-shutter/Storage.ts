@@ -1,92 +1,10 @@
 import { Configuration } from './Configuration';
 
-interface ModeConfiguration {
-    positionOpen: number | null;
-    positionClosed: number | null;
-    temperatureMin: number | null;
-    temperatureDesired: number | null;
-    temperatureMax: number | null;
-}
-
 interface QueueEntry {
     numberMethod?: 'setOutsideIlluminance' | 'setOutsideTemperature' | 'setInsideTemperature' | 'setSunAzimuth' | 'setSunAltitude' | 'setManualPosition';
     numberValue?: number | null;
     stringMethod?: 'setWindow';
     stringValue?: string | null;
-}
-
-/**
- * Parses the given time string and return a modified Date object for the given timestamp.
- */
-function parseTime(time: string, timestamp: Date): Date | null {
-    let hour, minute;
-    const pm = time.match(/p/i) !== null;
-    const num = time.replace(/[^0-9]/g, '');
-
-    // Parse for hour and minute
-    switch (num.length) {
-        case 4:
-            hour = parseInt(num[0] + num[1], 10);
-            minute = parseInt(num[2] + num[3], 10);
-            break;
-        case 3:
-            hour = parseInt(num[0], 10);
-            minute = parseInt(num[1] + num[2], 10);
-            break;
-        case 2:
-        case 1:
-            hour = parseInt(num[0] + (num[1] || ''), 10);
-            minute = 0;
-            break;
-        default:
-            return null;
-    }
-
-    // Make sure hour is in 24-hour format
-    if (pm && hour > 0 && hour < 12) {
-        hour += 12;
-    }
-
-    // Keep within range
-    if (hour <= 0 || hour >= 24) {
-        hour = 0;
-    }
-    if (minute < 0 || minute > 59) {
-        minute = 0;
-    }
-
-    const result = new Date(timestamp.getTime());
-    result.setHours(hour, minute, 0);
-
-    return result;
-}
-
-/**
- * Returns either the time for workdays or the time for weekends depending on the day of the week.
- */
-function selectTime(timestamp: Date, workdayTime: string | null, weekendTime: string | null, weekend: boolean | null): number | null {
-    const dayOfWeek = timestamp.getDay();
-    let isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
-    if (weekend !== null) {
-        isWeekend = weekend;
-    }
-
-    if (!isWeekend) {
-        if (workdayTime === null) {
-            return null;
-        }
-
-        const parsedTimeWorkday = parseTime(workdayTime, timestamp);
-        return parsedTimeWorkday !== null ? parsedTimeWorkday.getTime() : null;
-    }
-
-    if (weekendTime === null) {
-        return null;
-    }
-
-    const parsedTimeWeekend = parseTime(weekendTime, timestamp);
-
-    return parsedTimeWeekend !== null ? parsedTimeWeekend.getTime() : null;
 }
 
 /**
@@ -128,6 +46,7 @@ export class Storage {
     private position: number | null = null;
     private paused = false;
     private eventQueue: Array<QueueEntry> = [];
+    private updateAt: Date | null = null;
 
     private outsideIlluminance: number | null = null;
     private outsideTemperature: number | null = null;
@@ -138,7 +57,6 @@ export class Storage {
     private sunAltitude: number | null = null;
     private manualPosition: number | null = null;
     private manualStartedAt: Date | null = null;
-    private weekend: boolean | null = null;
 
     constructor(configuration: Configuration) {
         this.configuration = configuration;
@@ -273,20 +191,8 @@ export class Storage {
         }
     }
 
-    getWeekend(): boolean | null {
-        return this.weekend;
-    }
-
-    setWeekend(value: boolean | null): void {
-        this.weekend = value;
-    }
-
-    setFixedTime(time: number): void {
-        this.fixedTime = time;
-    }
-
-    unsetFixedTime(): void {
-        this.fixedTime = null;
+    setFixedTime(value: number | null): void {
+        this.fixedTime = value;
     }
 
     getMode(): string {
@@ -370,7 +276,7 @@ export class Storage {
             outsideTemperature: this.outsideTemperature,
             insideTemperature: this.insideTemperature,
             window: this.window,
-            isWeekend: this.weekend,
+            isWeekend: this.configuration.isWeekend(this.updateAt ?? new Date()),
             sunAzimuth: this.sunAzimuth,
             sunAltitude: this.sunAltitude,
         };
@@ -399,10 +305,12 @@ export class Storage {
         }
 
         const dateTime = new Date(timestamp);
-        const dayStartTime = selectTime(dateTime, this.configuration.dayStartTimeWorkday, this.configuration.dayStartTimeWeekend, this.weekend);
-        const dayStopTime = selectTime(dateTime, this.configuration.dayStopTimeWorkday, this.configuration.dayStopTimeWeekend, this.weekend);
-        const nightStartTime = selectTime(dateTime, this.configuration.nightStartTimeWorkday, this.configuration.nightStartTimeWeekend, this.weekend);
-        const nightStopTime = selectTime(dateTime, this.configuration.nightStopTimeWorkday, this.configuration.nightStopTimeWeekend, this.weekend);
+        this.updateAt = dateTime;
+
+        const dayStartTime = this.configuration.getDayStartTime(dateTime);
+        const dayStopTime = this.configuration.getDayStopTime(dateTime);
+        const nightStartTime = this.configuration.getNightStartTime(dateTime);
+        const nightStopTime = this.configuration.getNightStopTime(dateTime);
 
         let mode = this.mode;
         let reason = '';
@@ -562,7 +470,6 @@ export class Storage {
         this.sunAzimuth = null;
         this.sunAltitude = null;
         this.manualPosition = null;
-        this.weekend = null;
     }
 
     private setMode(mode: string, reason: string): void {
@@ -706,7 +613,7 @@ export class Storage {
     }
 
     private handleNight(modeChanged: boolean): number | null {
-        const configuration = this.getConfiguration(this.mode);
+        const configuration = this.configuration.getModeConfiguration(this.mode);
 
         this.specialReason = '';
         let position = configuration.positionClosed;
@@ -779,44 +686,5 @@ export class Storage {
 
             return configuration.positionClosed;
         }
-    }
-
-    /**
-     * Returns the configuration for the given mode.
-     */
-    private getConfiguration(mode: string): ModeConfiguration {
-        if (mode === 'morning') {
-            return {
-                positionOpen: this.configuration.morningPositionOpen,
-                positionClosed: this.configuration.morningPositionClosed,
-                temperatureMin: this.configuration.morningTemperatureMin,
-                temperatureDesired: this.configuration.morningTemperatureDesired,
-                temperatureMax: this.configuration.morningTemperatureMax,
-            };
-        } else if (mode === 'evening') {
-            return {
-                positionOpen: this.configuration.eveningPositionOpen,
-                positionClosed: this.configuration.eveningPositionClosed,
-                temperatureMin: this.configuration.eveningTemperatureMin,
-                temperatureDesired: this.configuration.eveningTemperatureDesired,
-                temperatureMax: this.configuration.eveningTemperatureMax,
-            };
-        } else if (mode === 'night') {
-            return {
-                positionOpen: this.configuration.nightPositionOpen,
-                positionClosed: this.configuration.nightPositionClosed,
-                temperatureMin: this.configuration.nightTemperatureMin,
-                temperatureDesired: this.configuration.nightTemperatureDesired,
-                temperatureMax: this.configuration.nightTemperatureMax,
-            };
-        }
-
-        return {
-            positionOpen: this.configuration.dayPositionOpen,
-            positionClosed: this.configuration.dayPositionClosed,
-            temperatureMin: this.configuration.dayTemperatureMin,
-            temperatureDesired: this.configuration.dayTemperatureDesired,
-            temperatureMax: this.configuration.dayTemperatureMax,
-        };
     }
 }

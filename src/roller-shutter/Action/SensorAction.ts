@@ -109,7 +109,7 @@ export class SensorAction implements Action {
         }
 
         if (topic === this.configuration.inputWeekendTopic) {
-            this.storage.setWeekend(input.getRequiredValue<boolean>('payloadWeekend'));
+            this.configuration.setWeekend(input.getRequiredValue<boolean>('payloadWeekend'));
         }
 
         return new Output();
