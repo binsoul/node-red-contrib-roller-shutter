@@ -3,4 +3,36 @@
         This node controls a roller shutter with a sensor for outside illuminance. Optionally sensors for outside and inside temperature can be used for shading during the day and cooling during the night.
         The window state override the position at night for ventilation.
     </p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>Outside illuminance <span class="property-type">number</span></dt>
+        <dd>Sensor value for outside illuminance</dd>
+        <dt class="optional">Outside temperature <span class="property-type">number</span></dt>
+        <dd>Sensor value for outside temperature</dd>
+        <dt class="optional">Inside temperature <span class="property-type">number</span></dt>
+        <dd>Sensor value for inside temperature</dd>
+        <dt class="optional">Window state <span class="property-type">string</span></dt>
+        <dd>Sensor value for window state: "closed", "tilted" or "open"</dd>
+        <dt class="optional">Position <span class="property-type">number</span></dt>
+        <dd>Sensor value for the shutter position</dd>
+        <dt class="optional">Weekend <span class="property-type">boolean</span></dt>
+        <dd>True for weekend and false for workdays</dd>
+        <dt class="optional">Sun azimuth <span class="property-type">number</span></dt>
+        <dd>Azimuth of the sun</dd>
+        <dt class="optional">Sun altitude <span class="property-type">number</span></dt>
+        <dd>Altitude of the sun</dd>
+        <dt class="optional">Command <span class="property-type">string</span></dt>
+        <dd>Optional command to control the node</dd>
+    </dl>
+
+    <h3>Commands</h3>
+    <dl class="message-properties">
+        <dt>clear</dt>
+        <dd>Clears internal state</dd>
+        <dt>update</dt>
+        <dd>Updates the current position</dd>
+        <dt>configure</dt>
+        <dd>Overwrites the configuration</dd>
+    </dl>
 </script>
