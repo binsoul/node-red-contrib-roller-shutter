@@ -142,30 +142,28 @@ export class Configuration {
 
     morningStartIlluminance = 25;
     dayStartIlluminance = 50;
-    nightStopTimeWorkday: string | null = null;
-    nightStopTimeWeekend: string | null = null;
-    dayStartTimeWorkday: string | null = null;
-    dayStartTimeWeekend: string | null = null;
-
     eveningStartIlluminance = 50;
     nightStartIlluminance = 25;
-    dayStopTimeWorkday: string | null = null;
-    dayStopTimeWeekend: string | null = null;
-    nightStartTimeWorkday: string | null = null;
-    nightStartTimeWeekend: string | null = null;
-
     shadingStartIlluminance: number | null = null;
     shadingStartAzimuth: number | null = null;
     shadingStartAltitude: number | null = null;
-
     shadingEndIlluminance: number | null = null;
     shadingEndAzimuth: number | null = null;
     shadingEndAltitude: number | null = null;
-
     allowNightChange = true;
+
+    private readonly _dayStartTimeWorkday: string | null = null;
+    private readonly _dayStartTimeWeekend: string | null = null;
+    private readonly _dayStopTimeWorkday: string | null = null;
+    private readonly _dayStopTimeWeekend: string | null = null;
+    private readonly _nightStartTimeWorkday: string | null = null;
+    private readonly _nightStartTimeWeekend: string | null = null;
+    private readonly _nightStopTimeWorkday: string | null = null;
+    private readonly _nightStopTimeWeekend: string | null = null;
 
     private fixedTime: number | null = null;
     private weekend: boolean | null = null;
+    private runtime: Map<string, string | number | null>;
 
     constructor(
         inputOutsideIlluminanceSource = 'msg',
@@ -304,16 +302,16 @@ export class Configuration {
         this.nightTemperatureMax = nightTemperatureMax;
         this.morningStartIlluminance = morningStartIlluminance;
         this.dayStartIlluminance = dayStartIlluminance;
-        this.nightStopTimeWorkday = nightStopTimeWorkday;
-        this.nightStopTimeWeekend = nightStopTimeWeekend;
-        this.dayStartTimeWorkday = dayStartTimeWorkday;
-        this.dayStartTimeWeekend = dayStartTimeWeekend;
+        this._nightStopTimeWorkday = nightStopTimeWorkday;
+        this._nightStopTimeWeekend = nightStopTimeWeekend;
+        this._dayStartTimeWorkday = dayStartTimeWorkday;
+        this._dayStartTimeWeekend = dayStartTimeWeekend;
         this.eveningStartIlluminance = eveningStartIlluminance;
         this.nightStartIlluminance = nightStartIlluminance;
-        this.dayStopTimeWorkday = dayStopTimeWorkday;
-        this.dayStopTimeWeekend = dayStopTimeWeekend;
-        this.nightStartTimeWorkday = nightStartTimeWorkday;
-        this.nightStartTimeWeekend = nightStartTimeWeekend;
+        this._dayStopTimeWorkday = dayStopTimeWorkday;
+        this._dayStopTimeWeekend = dayStopTimeWeekend;
+        this._nightStartTimeWorkday = nightStartTimeWorkday;
+        this._nightStartTimeWeekend = nightStartTimeWeekend;
         this.shadingStartIlluminance = shadingStartIlluminance;
         this.shadingStartAzimuth = shadingStartAzimuth;
         this.shadingStartAltitude = shadingStartAltitude;
@@ -321,8 +319,43 @@ export class Configuration {
         this.shadingEndAzimuth = shadingEndAzimuth;
         this.shadingEndAltitude = shadingEndAltitude;
         this.allowNightChange = allowNightChange;
+
+        this.runtime = new Map();
     }
 
+    get dayStartTimeWorkday(): string | null {
+        return this.runtime.has('dayStartTimeWorkday') ? '' + this.runtime.get('dayStartTimeWorkday') : this._dayStartTimeWorkday;
+    }
+
+    get dayStartTimeWeekend(): string | null {
+        return this.runtime.has('dayStartTimeWeekend') ? '' + this.runtime.get('dayStartTimeWeekend') : this._dayStartTimeWeekend;
+    }
+
+    get dayStopTimeWorkday(): string | null {
+        return this.runtime.has('dayStopTimeWorkday') ? '' + this.runtime.get('dayStopTimeWorkday') : this._dayStopTimeWorkday;
+    }
+
+    get dayStopTimeWeekend(): string | null {
+        return this.runtime.has('dayStopTimeWorkday') ? '' + this.runtime.get('dayStopTimeWeekend') : this._dayStopTimeWeekend;
+    }
+
+    get nightStartTimeWorkday(): string | null {
+        return this.runtime.has('nightStartTimeWorkday') ? '' + this.runtime.get('nightStartTimeWorkday') : this._nightStartTimeWorkday;
+    }
+
+    get nightStartTimeWeekend(): string | null {
+        return this.runtime.has('nightStartTimeWeekend') ? '' + this.runtime.get('nightStartTimeWeekend') : this._nightStartTimeWeekend;
+    }
+
+    get nightStopTimeWorkday(): string | null {
+        return this.runtime.has('nightStopTimeWorkday') ? '' + this.runtime.get('nightStopTimeWorkday') : this._nightStopTimeWorkday;
+    }
+
+    get nightStopTimeWeekend(): string | null {
+        return this.runtime.has('nightStopTimeWeekend') ? '' + this.runtime.get('nightStopTimeWeekend') : this._nightStopTimeWeekend;
+    }
+
+    //--------------------------------------
     setFixedTime(value: number | null): void {
         this.fixedTime = value;
     }
@@ -417,5 +450,13 @@ export class Configuration {
             temperatureDesired: this.dayTemperatureDesired,
             temperatureMax: this.dayTemperatureMax,
         };
+    }
+
+    setProperty(key: string, value: string | number | null) {
+        if (value === null) {
+            this.runtime.delete(key);
+        } else {
+            this.runtime.set(key, value);
+        }
     }
 }

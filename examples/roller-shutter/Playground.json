@@ -128,7 +128,7 @@
         "nightPositionTilted": "50",
         "shadingPositionOpen": "100",
         "shadingPositionClosed": "25",
-        "allowNightChange": true,
+        "allowNightChange": false,
         "name": "",
         "outputs": 2,
         "x": 210,
@@ -615,7 +615,8 @@
             "b5cb921066b914d4",
             "486ba8bc04695630",
             "638cc737e2ded781",
-            "dc74fbbc1c30d8c5"
+            "dc74fbbc1c30d8c5",
+            "03968c0b1a4bf8e8"
         ],
         "x": 95,
         "y": 60,
@@ -1247,7 +1248,7 @@
         "payload": "100",
         "payloadType": "num",
         "x": 1230,
-        "y": 240,
+        "y": 320,
         "wires": [
             [
                 "486ba8bc04695630"
@@ -1318,7 +1319,7 @@
         "payload": "50",
         "payloadType": "num",
         "x": 1220,
-        "y": 200,
+        "y": 240,
         "wires": [
             [
                 "486ba8bc04695630"
@@ -1343,7 +1344,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 1250,
-        "y": 280,
+        "y": 360,
         "wires": [
             [
                 "486ba8bc04695630"
@@ -1474,6 +1475,140 @@
         "statusType": "auto",
         "x": 550,
         "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c0f2745515ff1a0d",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "position",
+        "payload": "75",
+        "payloadType": "num",
+        "x": 1220,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "92e91823d8016b5d",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "position",
+        "payload": "25",
+        "payloadType": "num",
+        "x": 1220,
+        "y": 200,
+        "wires": [
+            [
+                "486ba8bc04695630"
+            ]
+        ]
+    },
+    {
+        "id": "d35d66754167a1f1",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set nightStopTimeWorkday to 08:00",
+        "props": [
+            {
+                "p": "command",
+                "v": "configure",
+                "vt": "str"
+            },
+            {
+                "p": "key",
+                "v": "nightStopTimeWorkday",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "08:00",
+        "payloadType": "str",
+        "x": 1300,
+        "y": 520,
+        "wires": [
+            [
+                "03968c0b1a4bf8e8"
+            ]
+        ]
+    },
+    {
+        "id": "472ac6d549e39ab4",
+        "type": "inject",
+        "z": "75b1632e8be4d5e1",
+        "name": "Set nightStopTimeWorkday to default",
+        "props": [
+            {
+                "p": "command",
+                "v": "configure",
+                "vt": "str"
+            },
+            {
+                "p": "key",
+                "v": "nightStopTimeWorkday",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1310,
+        "y": 560,
+        "wires": [
+            [
+                "03968c0b1a4bf8e8"
+            ]
+        ]
+    },
+    {
+        "id": "03968c0b1a4bf8e8",
+        "type": "link out",
+        "z": "75b1632e8be4d5e1",
+        "name": "link out 11",
+        "mode": "link",
+        "links": [
+            "bf999adc7009d3b9"
+        ],
+        "x": 1505,
+        "y": 540,
         "wires": []
     }
 ]
