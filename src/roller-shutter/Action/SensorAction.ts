@@ -17,6 +17,13 @@ export class SensorAction implements Action {
     defineInput(): InputDefinition {
         const result = new InputDefinition();
 
+        result.set('topic', {
+            source: 'msg',
+            property: 'topic',
+            type: 'string',
+            required: true,
+        });
+
         result.set('payloadOutsideIlluminance', {
             source: this.configuration.inputOutsideIlluminanceSource,
             property: this.configuration.inputOutsideIlluminanceProperty,
@@ -81,7 +88,7 @@ export class SensorAction implements Action {
     }
 
     execute(input: Input): Output {
-        const topic = input.getMessage().data.topic?.toLowerCase();
+        const topic = ('' + input.getRequiredValue<string>('topic')).toLowerCase();
 
         if (topic === this.configuration.inputOutsideIlluminanceTopic) {
             this.storage.setOutsideIlluminance(input.getRequiredValue<number>('payloadOutsideIlluminance'));
