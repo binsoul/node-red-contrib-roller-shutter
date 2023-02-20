@@ -640,11 +640,14 @@ export class Storage {
         }
 
         let isSilence = false;
-        if (!this.windowChanged && !modeChanged && !this.configuration.allowNightChange && this.mode === 'night') {
+        if (!modeChanged && !this.configuration.allowNightChange && this.mode === 'night') {
             // if disallowed don't change the position at night except if the mode changes from evening to night
-            special = this.special;
-            reason = 'silence';
-            position = this.position ?? configuration.positionClosed;
+            if (!isWindowOpenOrTilted && !this.windowChanged) {
+                special = this.special;
+                reason = 'silence';
+                position = this.position ?? configuration.positionClosed;
+            }
+
             isSilence = true;
         }
 
