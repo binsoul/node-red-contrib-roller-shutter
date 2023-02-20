@@ -9,7 +9,7 @@ interface NodeEditorProperties extends EditorNodeProperties, UserConfigurationOp
 
 RED.nodes.registerType<NodeEditorProperties>('binsoul-roller-shutter', {
     category: 'function',
-    color: '#A6BBCF',
+    color: '#97BF41',
     defaults: {
         inputOutsideIlluminanceSource: {
             value: 'msg',
